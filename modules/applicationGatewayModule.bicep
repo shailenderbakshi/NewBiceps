@@ -18,6 +18,9 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
 resource applicationGateway 'Microsoft.Network/applicationGateways@2021-02-01' = {
   name: appGatewayName
   location: location
+  dependsOn: [
+    publicIP
+  ]
   properties: {
     sku: {
       name: 'Standard_Small'
