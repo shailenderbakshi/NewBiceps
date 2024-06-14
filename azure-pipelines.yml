@@ -14,6 +14,7 @@ variables:
   gatewayName: 'vpnGWnotts'
   bastionHostName: 'bastionnotts'
   logAnalyticsWorkspaceName: 'nottsLogAnalytics'
+  appGatewayName: 'nottsAppGateway'
   
 steps:
 - task: AzureCLI@2
@@ -32,5 +33,6 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) location=$(location)
+        # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
+        --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
