@@ -33,3 +33,4 @@ output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.stora
 output vnetId string = virtualNetworkModule.outputs.vnetId
 output subnetId string = virtualNetworkModule.outputs.subnetId
 output firewallId string = azureFirewallModule.outputs.firewallId
+output publicIPId string = azureFirewallModule.outputs.publicIPId
