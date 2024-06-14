@@ -26,5 +26,5 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        --parameters storageAccountName=youruniquestorageaccountname
+        --parameters storageAccountName=notts01020304
   displayName: 'Deploy Bicep Template'
