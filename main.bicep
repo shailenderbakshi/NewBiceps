@@ -68,18 +68,18 @@ module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
   }
 }
 
-output storageAccountId string = storageAccountModule.outputs.storageAccountId
-output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
-output vnetId string = virtualNetworkModule.outputs.vnetId
-output subnetId string = virtualNetworkModule.outputs.subnetId
-output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
-output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
-output bastionSubnetId string = virtualNetworkModule.outputs.bastionSubnetId
-output firewallId string = azureFirewallModule.outputs.firewallId
-output firewallPublicIPId string = azureFirewallModule.outputs.publicIPId
-output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
-output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
-output bastionHostId string = bastionHostModule.outputs.bastionHostId
-output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
-output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
+// output storageAccountId string = storageAccountModule.outputs.storageAccountId
+// output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
+// output vnetId string = virtualNetworkModule.outputs.vnetId
+// output subnetId string = virtualNetworkModule.outputs.subnetId
+// output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
+// output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
+// output bastionSubnetId string = virtualNetworkModule.outputs.bastionSubnetId
+// output firewallId string = azureFirewallModule.outputs.firewallId
+// output firewallPublicIPId string = azureFirewallModule.outputs.publicIPId
+// output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
+// output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
+// output bastionHostId string = bastionHostModule.outputs.bastionHostId
+// output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
+// output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
 output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
