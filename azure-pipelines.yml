@@ -11,6 +11,7 @@ variables:
   storageAccountName: 'nottscounty01010202'
   vnetName: 'notts-vnet'
   firewallName: 'nottsfw'
+  gatewayName: 'appGWnotts'
 
 steps:
 - task: AzureCLI@2
@@ -29,5 +30,5 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) location=$(location)
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
