@@ -5,7 +5,7 @@ param subnetName string = 'default'
 param subnetPrefix string = '10.0.0.0/24'
 param firewallSubnetPrefix string = '10.0.1.0/24'
 param gatewaySubnetPrefix string = '10.0.2.0/24'
-param appGatewaySubnetPrefix string = '10.0.3.0/24'
+param appGatewaySubnetPrefix string = '10.0.3.0/24' // Adjust as needed
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: vnetName
@@ -20,21 +20,21 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
         properties: {
           addressPrefix: subnetPrefix
         }
-      },
+      }
       {
         name: 'AzureFirewallSubnet'
         properties: {
           addressPrefix: firewallSubnetPrefix
         }
-      },
+      }
       {
         name: 'GatewaySubnet'
         properties: {
           addressPrefix: gatewaySubnetPrefix
         }
-      },
+      }
       {
-        name: 'ApplicationGatewaySubnet'
+        name: 'AppGatewaySubnet'
         properties: {
           addressPrefix: appGatewaySubnetPrefix
         }
