@@ -2,6 +2,7 @@ param storageAccountName string
 param vnetName string
 param firewallName string
 param gatewayName string
+param bastionHostName string
 param location string = resourceGroup().location
 
 module storageAccountModule 'modules/storageAccountModule.bicep' = {
@@ -40,13 +41,27 @@ module virtualNetworkGatewayModule 'modules/virtualNetworkGatewayModule.bicep' =
   }
 }
 
+module bastionHostModule 'modules/bastionHostModule.bicep' = {
+  name: 'bastionHostDeployment'
+  params: {
+    bastionHostName: bastionHostName
+    location: location
+    vnetId: virtualNetworkModule.outputs.vnetId
+    bastionSubnetId: virtualNetworkModule.outputs.bastionSubnetId
+    publicIpName: '${bastionHostName}-pip'
+  }
+}
+
 output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
 output vnetId string = virtualNetworkModule.outputs.vnetId
 output subnetId string = virtualNetworkModule.outputs.subnetId
 output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
 output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
+output bastionSubnetId string = virtualNetworkModule.outputs.bastionSubnetId
 output firewallId string = azureFirewallModule.outputs.firewallId
 output firewallPublicIPId string = azureFirewallModule.outputs.publicIPId
 output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
 output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
+output bastionHostId string = bastionHostModule.outputs.bastionHostId
+output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
