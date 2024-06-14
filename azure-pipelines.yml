@@ -1,18 +1,18 @@
 trigger:
-- main
+- none
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'YourAzureSubscription'
-  resourceGroupName: 'YourResourceGroupName'
+  azureSubscription: 'Shail-Subs'
+  resourceGroupName: 'Nottscounty2-rg'
   location: 'eastus'
-  storageAccountName: 'youruniquestorageaccountname'
-  vnetName: 'yourvnetname'
-  firewallName: 'yourfirewallname'
-  gatewayName: 'yourgatewayname'
-
+  storageAccountName: 'nottscounty01010202'
+  vnetName: 'notts-vnet'
+  firewallName: 'nottsfw'
+  gatewayName: 'appGWnotts'
+  
 steps:
 - task: AzureCLI@2
   inputs:
