@@ -61,6 +61,13 @@ module logAnalyticsWorkspaceModule 'modules/logAnalyticsWorkspaceModule.bicep' =
   }
 }
 
+module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
+  name: 'networkWatcherDeployment'
+  params: {
+    location: location
+  }
+}
+
 output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
 output vnetId string = virtualNetworkModule.outputs.vnetId
@@ -75,3 +82,4 @@ output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
 output bastionHostId string = bastionHostModule.outputs.bastionHostId
 output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
 output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
+output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
