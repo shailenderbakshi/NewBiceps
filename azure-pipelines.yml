@@ -1,18 +1,17 @@
 trigger:
-- none
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'Nottscounty2-rg'
+  azureSubscription: 'YourAzureSubscription'
+  resourceGroupName: 'YourResourceGroupName'
   location: 'eastus'
-  storageAccountName: 'nottscounty01010202'
-  vnetName: 'notts-vnet'
-  firewallName: 'nottsfw'
-  gatewayName: 'appGWnotts'
-  appGatewayName: 'mynewappgw01'
+  storageAccountName: 'youruniquestorageaccountname'
+  vnetName: 'yourvnetname'
+  firewallName: 'yourfirewallname'
+  gatewayName: 'yourgatewayname'
 
 steps:
 - task: AzureCLI@2
@@ -31,5 +30,5 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) appGatewayName=$(appGatewayName) location=$(location)
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
