@@ -3,6 +3,7 @@ param vnetName string
 param firewallName string
 param gatewayName string
 param bastionHostName string
+param logAnalyticsWorkspaceName string
 param location string = resourceGroup().location
 
 module storageAccountModule 'modules/storageAccountModule.bicep' = {
@@ -52,6 +53,14 @@ module bastionHostModule 'modules/bastionHostModule.bicep' = {
   }
 }
 
+module logAnalyticsWorkspaceModule 'modules/logAnalyticsWorkspaceModule.bicep' = {
+  name: 'logAnalyticsWorkspaceDeployment'
+  params: {
+    workspaceName: logAnalyticsWorkspaceName
+    location: location
+  }
+}
+
 output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
 output vnetId string = virtualNetworkModule.outputs.vnetId
@@ -65,3 +74,4 @@ output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
 output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
 output bastionHostId string = bastionHostModule.outputs.bastionHostId
 output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
+output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
