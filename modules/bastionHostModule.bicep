@@ -1,10 +1,9 @@
 param bastionHostName string
 param location string
-param vnetId string
 param bastionSubnetId string
 param publicIpName string
 
-resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   name: publicIpName
   location: location
   sku: {
@@ -18,9 +17,6 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
 resource bastionHost 'Microsoft.Network/bastionHosts@2021-02-01' = {
   name: bastionHostName
   location: location
-  dependsOn: [
-    publicIP
-  ]
   properties: {
     ipConfigurations: [
       {
@@ -30,7 +26,7 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2021-02-01' = {
             id: bastionSubnetId
           }
           publicIPAddress: {
-            id: publicIP.id
+            id: publicIPAddress.id
           }
         }
       }
@@ -39,4 +35,4 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2021-02-01' = {
 }
 
 output bastionHostId string = bastionHost.id
-output publicIPId string = publicIP.id
+output publicIPId string = publicIPAddress.id
