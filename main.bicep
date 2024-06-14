@@ -25,6 +25,7 @@ module azureFirewallModule 'modules/azureFirewallModule.bicep' = {
     firewallName: firewallName
     location: location
     vnetId: virtualNetworkModule.outputs.vnetId
+    firewallSubnetId: virtualNetworkModule.outputs.firewallSubnetId
   }
 }
 
@@ -32,5 +33,6 @@ output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
 output vnetId string = virtualNetworkModule.outputs.vnetId
 output subnetId string = virtualNetworkModule.outputs.subnetId
+output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
 output firewallId string = azureFirewallModule.outputs.firewallId
 output publicIPId string = azureFirewallModule.outputs.publicIPId
