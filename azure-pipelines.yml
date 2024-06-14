@@ -10,7 +10,7 @@ variables:
   location: 'eastus'
   storageAccountName: 'nottscounty01010202'
   vnetName: 'notts-vnet'
-  firewallName: 'fwnotts
+  firewallName: 'fwnotts'
   gatewayName: 'vpnGWnotts'
   bastionHostName: 'bastionnotts'
   
