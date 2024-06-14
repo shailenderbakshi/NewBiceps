@@ -1,5 +1,5 @@
 param vnetName string
-param location string = resourceGroup().location
+param location string
 param addressPrefix string = '10.0.0.0/16'
 param subnetName string = 'default'
 param subnetPrefix string = '10.0.0.0/24'
@@ -41,7 +41,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
         }
       }
       {
-        name: 'AzureBastionSubnet'
+        name: 'BastionSubnet'
         properties: {
           addressPrefix: bastionSubnetPrefix
         }
