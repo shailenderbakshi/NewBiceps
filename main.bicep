@@ -48,7 +48,6 @@ module bastionHostModule 'modules/bastionHostModule.bicep' = {
   params: {
     bastionHostName: bastionHostName
     location: location
-    vnetId: virtualNetworkModule.outputs.vnetId
     bastionSubnetId: virtualNetworkModule.outputs.bastionSubnetId
     publicIpName: '${bastionHostName}-pip'
   }
@@ -74,7 +73,6 @@ module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
   params: {
     appGatewayName: appGatewayName
     location: location
-    vnetId: virtualNetworkModule.outputs.vnetId
     appGatewaySubnetId: virtualNetworkModule.outputs.appGatewaySubnetId
   }
 }
