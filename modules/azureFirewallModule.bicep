@@ -3,6 +3,18 @@ param location string = resourceGroup().location
 param vnetId string
 param subnetName string = 'AzureFirewallSubnet'
 
+resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
+  name: '${firewallName}-pip'
+  location: location
+  sku: {
+    name: 'Standard'
+  }
+  properties: {
+    publicIPAllocationMethod: 'Static'
+    idleTimeoutInMinutes: 4
+  }
+}
+
 resource azureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
   name: firewallName
   location: location
@@ -22,7 +34,7 @@ resource azureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
             id: '${vnetId}/subnets/${subnetName}'
           }
           publicIPAddress: {
-            id: null
+            id: publicIP.id
           }
         }
       }
@@ -31,3 +43,4 @@ resource azureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
 }
 
 output firewallId string = azureFirewall.id
+output publicIPId string = publicIP.id
