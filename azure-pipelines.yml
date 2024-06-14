@@ -6,8 +6,10 @@ pool:
 
 variables:
   azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'NOtts-RG'
+  resourceGroupName: 'Nottscounty2-rg'
   location: 'eastus'
+  storageAccountName: 'nottscounty01010202'
+  vnetName: 'notts-vnet'
 
 steps:
 - task: AzureCLI@2
@@ -26,5 +28,5 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        --parameters storageAccountName=notts01020304
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) location=$(location)
   displayName: 'Deploy Bicep Template'
