@@ -1,9 +1,10 @@
 // param storageAccountName string
-// param vnetName string
+param vnetName string
 // param firewallName string
 // param gatewayName string
 // param bastionHostName string
 // param logAnalyticsWorkspaceName string
+param appGatewayName string
 param location string = resourceGroup().location
 
 // module storageAccountModule 'modules/storageAccountModule.bicep' = {
@@ -14,13 +15,13 @@ param location string = resourceGroup().location
 //   }
 // }
 
-// module virtualNetworkModule 'modules/virtualNetworkModule.bicep' = {
-//   name: 'virtualNetworkDeployment'
-//   params: {
-//     vnetName: vnetName
-//     location: location
-//   }
-// }
+module virtualNetworkModule 'modules/virtualNetworkModule.bicep' = {
+  name: 'virtualNetworkDeployment'
+  params: {
+    vnetName: vnetName
+    location: location
+  }
+}
 
 // module azureFirewallModule 'modules/azureFirewallModule.bicep' = {
 //   name: 'azureFirewallDeployment'
@@ -61,17 +62,27 @@ param location string = resourceGroup().location
 //   }
 // }
 
-module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
-  name: 'networkWatcherDeployment'
+// module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
+//   name: 'networkWatcherDeployment'
+//   params: {
+//     location: location
+//   }
+// }
+
+module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
+  name: 'applicationGatewayDeployment'
   params: {
+    appGatewayName: appGatewayName
     location: location
+    vnetId: virtualNetworkModule.outputs.vnetId
+    appGatewaySubnetId: virtualNetworkModule.outputs.appGatewaySubnetId
   }
 }
 
 // output storageAccountId string = storageAccountModule.outputs.storageAccountId
 // output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
-// output vnetId string = virtualNetworkModule.outputs.vnetId
-// output subnetId string = virtualNetworkModule.outputs.subnetId
+output vnetId string = virtualNetworkModule.outputs.vnetId
+output subnetId string = virtualNetworkModule.outputs.subnetId
 // output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
 // output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
 // output bastionSubnetId string = virtualNetworkModule.outputs.bastionSubnetId
@@ -82,4 +93,6 @@ module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
 // output bastionHostId string = bastionHostModule.outputs.bastionHostId
 // output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
 // output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
-output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
+// output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
+output appGatewayId string = applicationGatewayModule.outputs.appGatewayId
+output appGatewayPublicIPId string = applicationGatewayModule.outputs.publicIPId
