@@ -5,8 +5,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'YourAzureSubscription'
-  resourceGroupName: 'YourResourceGroupName'
+  azureSubscription: 'Shail-Subs'
+  resourceGroupName: 'NOtts-RG'
   location: 'eastus'
 
 steps:
