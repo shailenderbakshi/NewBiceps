@@ -1,6 +1,5 @@
 param appGatewayName string
 param location string
-param vnetId string
 param appGatewaySubnetId string
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
@@ -72,10 +71,10 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2021-02-01' =
         name: 'appGatewayHttpListener'
         properties: {
           frontendIPConfiguration: {
-            id: applicationGateway.properties.frontendIPConfigurations[0].id
+            id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGatewayFrontendIp')
           }
           frontendPort: {
-            id: applicationGateway.properties.frontendPorts[0].id
+            id: resourceId('Microsoft.Network/applicationGateways/frontendPorts', appGatewayName, 'appGatewayFrontendPort')
           }
           protocol: 'Http'
           sslCertificate: null
@@ -88,13 +87,13 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2021-02-01' =
         properties: {
           ruleType: 'Basic'
           httpListener: {
-            id: applicationGateway.properties.httpListeners[0].id
+            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'appGatewayHttpListener')
           }
           backendAddressPool: {
-            id: applicationGateway.properties.backendAddressPools[0].id
+            id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools', appGatewayName, 'appGatewayBackendPool')
           }
           backendHttpSettings: {
-            id: applicationGateway.properties.backendHttpSettingsCollection[0].id
+            id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', appGatewayName, 'appGatewayBackendHttpSettings')
           }
         }
       }
