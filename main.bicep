@@ -5,6 +5,7 @@ param gatewayName string
 param bastionHostName string
 param logAnalyticsWorkspaceName string
 param appGatewayName string
+param policyAssignmentName string
 param location string = resourceGroup().location
 
 module storageAccountModule 'modules/storageAccountModule.bicep' = {
@@ -77,6 +78,14 @@ module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
   }
 }
 
+module azurePolicyModule 'modules/azurePolicyModule.bicep' = {
+  name: 'azurePolicyDeployment'
+  params: {
+    policyAssignmentName: policyAssignmentName
+    location: location
+  }
+}
+
 output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
 output vnetId string = virtualNetworkModule.outputs.vnetId
@@ -94,3 +103,5 @@ output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.work
 output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
 output appGatewayId string = applicationGatewayModule.outputs.appGatewayId
 output appGatewayPublicIPId string = applicationGatewayModule.outputs.publicIPId
+output policyDefinitionId string = azurePolicyModule.outputs.policyDefinitionId
+output policyAssignmentId string = azurePolicyModule.outputs.policyAssignmentId
