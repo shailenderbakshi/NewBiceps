@@ -10,7 +10,7 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
     name: 'Standard'
   }
   properties: {
-    publicIPAllocationMethod: 'Dynamic'
+    publicIPAllocationMethod: 'Static'
   }
 }
 
