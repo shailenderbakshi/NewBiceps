@@ -6,7 +6,7 @@ pool:
 
 variables:
   azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'Notts-rg'
+  resourceGroupName: 'New-Notts-rg'
   location: 'eastus'
   storageAccountName: 'nottscounty01010202'
   vnetName: 'notts-vnet'
