@@ -2,6 +2,7 @@ param policyAssignmentName string
 param location string = resourceGroup().location
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2020-09-01' = {
+  scope: subscription()
   name: 'auditVMSKU'
   properties: {
     displayName: 'Audit VM SKU'
@@ -21,12 +22,11 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2020-09-01'
 }
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2020-09-01' = {
+  scope: subscription()
   name: policyAssignmentName
-  location: location
   properties: {
     displayName: 'Audit VM SKU Assignment'
     policyDefinitionId: policyDefinition.id
-    scope: subscription().id
     enforcementMode: 'DoNotEnforce'
   }
 }
