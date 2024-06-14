@@ -47,7 +47,7 @@ module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
     appGatewayName: appGatewayName
     location: location
     vnetId: virtualNetworkModule.outputs.vnetId
-    subnetId: virtualNetworkModule.outputs.subnetId
+    appGatewaySubnetId: virtualNetworkModule.outputs.appGatewaySubnetId
     publicIpName: '${appGatewayName}-pip'
   }
 }
@@ -58,6 +58,7 @@ output vnetId string = virtualNetworkModule.outputs.vnetId
 output subnetId string = virtualNetworkModule.outputs.subnetId
 output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
 output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
+output appGatewaySubnetId string = applicationGatewayModule.outputs.appGatewaySubnetId
 output firewallId string = azureFirewallModule.outputs.firewallId
 output firewallPublicIPId string = azureFirewallModule.outputs.publicIPId
 output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
