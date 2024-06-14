@@ -4,7 +4,7 @@
 // param gatewayName string
 // param bastionHostName string
 // param logAnalyticsWorkspaceName string
-// param location string = resourceGroup().location
+param location string = resourceGroup().location
 
 // module storageAccountModule 'modules/storageAccountModule.bicep' = {
 //   name: 'storageAccountDeployment'
