@@ -3,7 +3,7 @@ param vnetName string
 param firewallName string
 param location string = resourceGroup().location
 
-module storageAccountModule 'storageAccountModule.bicep' = {
+module storageAccountModule 'modules/storageAccountModule.bicep' = {
   name: 'storageAccountDeployment'
   params: {
     storageAccountName: storageAccountName
@@ -11,7 +11,7 @@ module storageAccountModule 'storageAccountModule.bicep' = {
   }
 }
 
-module virtualNetworkModule 'virtualNetworkModule.bicep' = {
+module virtualNetworkModule 'modules/virtualNetworkModule.bicep' = {
   name: 'virtualNetworkDeployment'
   params: {
     vnetName: vnetName
@@ -19,7 +19,7 @@ module virtualNetworkModule 'virtualNetworkModule.bicep' = {
   }
 }
 
-module azureFirewallModule 'azureFirewallModule.bicep' = {
+module azureFirewallModule 'modules/azureFirewallModule.bicep' = {
   name: 'azureFirewallDeployment'
   params: {
     firewallName: firewallName
