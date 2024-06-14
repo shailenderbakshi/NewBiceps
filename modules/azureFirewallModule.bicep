@@ -1,7 +1,7 @@
 param firewallName string
 param location string = resourceGroup().location
 param vnetId string
-param subnetName string = 'AzureFirewallSubnet'
+param firewallSubnetId string
 
 resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
   name: '${firewallName}-pip'
@@ -31,7 +31,7 @@ resource azureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
         name: 'azureFirewallIpConfig'
         properties: {
           subnet: {
-            id: '${vnetId}/subnets/${subnetName}'
+            id: firewallSubnetId
           }
           publicIPAddress: {
             id: publicIP.id
