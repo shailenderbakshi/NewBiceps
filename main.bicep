@@ -78,13 +78,13 @@ module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
   }
 }
 
-module azurePolicyModule 'modules/azurePolicyModule.bicep' = {
-  name: 'azurePolicyDeployment'
-  params: {
-    policyAssignmentName: policyAssignmentName
-    location: location
-  }
-}
+// module azurePolicyModule 'modules/azurePolicyModule.bicep' = {
+//   name: 'azurePolicyDeployment'
+//   params: {
+//     policyAssignmentName: policyAssignmentName
+//     location: location
+//   }
+// }
 
 output storageAccountId string = storageAccountModule.outputs.storageAccountId
 output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
@@ -103,5 +103,5 @@ output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.work
 output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
 output appGatewayId string = applicationGatewayModule.outputs.appGatewayId
 output appGatewayPublicIPId string = applicationGatewayModule.outputs.publicIPId
-output policyDefinitionId string = azurePolicyModule.outputs.policyDefinitionId
-output policyAssignmentId string = azurePolicyModule.outputs.policyAssignmentId
+// output policyDefinitionId string = azurePolicyModule.outputs.policyDefinitionId
+// output policyAssignmentId string = azurePolicyModule.outputs.policyAssignmentId
