@@ -4,10 +4,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-# variables:
-#   azureSubscription: 'Shail-Subs'
-#   resourceGroupName: 'New-Notts-rg'
-#   location: 'eastus'
+variables:
+  azureSubscription: 'Shail-Subs'
+  resourceGroupName: 'policy-Notts-rg'
+  location: 'eastus'
 #   storageAccountName: 'nottscounty01010202'
 #   vnetName: 'notts-vnet'
 #   firewallName: 'fwnotts'
