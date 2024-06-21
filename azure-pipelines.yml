@@ -15,7 +15,7 @@ variables:
   bastionHostName: 'bastionnotts'
   logAnalyticsWorkspaceName: 'nottsLogAnalytics'
   appGatewayName: 'nottsAppGateway'
-  policyAssignmentName: 'nottsPolicyAssignment'
+  # policyAssignmentName: 'nottsPolicyAssignment'
   
 steps:
 - task: AzureCLI@2
