@@ -4,17 +4,17 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'New-Notts-rg'
-  location: 'eastus'
-  storageAccountName: 'nottscounty01010202'
-  vnetName: 'notts-vnet'
-  firewallName: 'fwnotts'
-  gatewayName: 'vpnGWnotts'
-  bastionHostName: 'bastionnotts'
-  logAnalyticsWorkspaceName: 'nottsLogAnalytics'
-  appGatewayName: 'nottsAppGateway'
+# variables:
+#   azureSubscription: 'Shail-Subs'
+#   resourceGroupName: 'New-Notts-rg'
+#   location: 'eastus'
+#   storageAccountName: 'nottscounty01010202'
+#   vnetName: 'notts-vnet'
+#   firewallName: 'fwnotts'
+#   gatewayName: 'vpnGWnotts'
+#   bastionHostName: 'bastionnotts'
+#   logAnalyticsWorkspaceName: 'nottsLogAnalytics'
+#   appGatewayName: 'nottsAppGateway'
   # policyAssignmentName: 'nottsPolicyAssignment'
   
 steps:
@@ -34,6 +34,6 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
-        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
+        # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
         # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
