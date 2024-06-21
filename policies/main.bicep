@@ -1,5 +1,5 @@
 // main.bicep
-module policyModule './policies/policyModule.bicep' = {
+module policyModule 'policies/policyModule.bicep' = {
   name: 'deployAuditRegionsPolicy'
   params: {
     policyDefinitionName: 'auditRegionsPolicy'
