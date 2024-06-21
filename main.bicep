@@ -5,7 +5,7 @@ param gatewayName string
 param bastionHostName string
 param logAnalyticsWorkspaceName string
 param appGatewayName string
-param policyAssignmentName string
+// param policyAssignmentName string
 param location string = resourceGroup().location
 
 module storageAccountModule 'modules/storageAccountModule.bicep' = {
