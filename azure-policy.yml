@@ -36,4 +36,5 @@ steps:
         --template-file /main.bicep /
         # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
         # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
+        --parameters @parameters.json
   displayName: 'Deploy Bicep Template'
