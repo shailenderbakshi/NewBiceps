@@ -33,7 +33,7 @@ steps:
       # Deploy the Bicep template
       az deployment group create \
         --resource-group $(resourceGroupName) \
-        --template-file main.bicep \
+        --template-file main.bicep
         # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
         # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
