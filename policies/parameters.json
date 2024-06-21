@@ -1,0 +1,18 @@
+{
+  "policyDefinitionName": {
+    "value": "auditRegionsPolicy"
+  },
+  "policyDisplayName": {
+    "value": "Audit resources in allowed regions"
+  },
+  "policyDescription": {
+    "value": "This policy audits resources that are deployed in non-allowed regions."
+  },
+  "allowedRegions": {
+    "value": [
+      "East US",
+      "West US",
+      "Central US"
+    ]
+  }
+}
