@@ -4,7 +4,7 @@ param vnetId string
 param firewallSubnetId string
 
 resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: '${firewallName}-pip'
+  name: 'fw-pip-tprany-use-001'
   location: location
   sku: {
     name: 'Standard'
