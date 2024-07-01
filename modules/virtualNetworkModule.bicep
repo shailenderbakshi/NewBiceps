@@ -1,8 +1,6 @@
 param vnetName string
 param location string
 param addressPrefix string = '10.70.0.0/16'
-// param subnetName string = 'default'
-// param subnetPrefix string = '10.0.0.0/24'
 param firewallSubnetPrefix string = '10.70.0.128/26'
 param gatewaySubnetPrefix string = '10.70.0.0/26'
 param appGatewaySubnetPrefix string = '10.70.0.64/26'
@@ -16,12 +14,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       addressPrefixes: [addressPrefix]
     }
     subnets: [
-      // {
-      //   name: subnetName
-      //   properties: {
-      //     addressPrefix: subnetPrefix
-      //   }
-      // }
       {
         name: 'AzureFirewallSubnet'
         properties: {
@@ -51,7 +43,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
 }
 
 output vnetId string = virtualNetwork.id
-output subnetId string = virtualNetwork.properties.subnets[0].id
 output firewallSubnetId string = virtualNetwork.properties.subnets[0].id
 output gatewaySubnetId string = virtualNetwork.properties.subnets[1].id
 output appGatewaySubnetId string = virtualNetwork.properties.subnets[2].id
