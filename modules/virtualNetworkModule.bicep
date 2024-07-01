@@ -33,7 +33,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
         }
       }
       {
-        name: 'BastionSubnet'
+        name: 'AzureBastionSubnet' // Corrected the subnet name for Azure Bastion
         properties: {
           addressPrefix: bastionSubnetPrefix
         }
