@@ -16,11 +16,11 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
       addressPrefixes: [addressPrefix]
     }
     subnets: [
-      {
-        name: subnetName
-        properties: {
-          addressPrefix: subnetPrefix
-        }
+      // {
+      //   name: subnetName
+      //   properties: {
+      //     addressPrefix: subnetPrefix
+      //   }
       }
       {
         name: 'AzureFirewallSubnet'
