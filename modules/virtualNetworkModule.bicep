@@ -1,12 +1,12 @@
 param vnetName string
 param location string
-param addressPrefix string = '10.0.0.0/16'
-param subnetName string = 'default'
-param subnetPrefix string = '10.0.0.0/24'
-param firewallSubnetPrefix string = '10.0.1.0/24'
-param gatewaySubnetPrefix string = '10.0.2.0/24'
-param appGatewaySubnetPrefix string = '10.0.3.0/24'
-param bastionSubnetPrefix string = '10.0.4.0/24'
+param addressPrefix string = '10.70.0.0/16'
+// param subnetName string = 'default'
+// param subnetPrefix string = '10.0.0.0/24'
+param firewallSubnetPrefix string = '10.70.0.128/26'
+param gatewaySubnetPrefix string = '10.70.0.0/26'
+param appGatewaySubnetPrefix string = '10.70.0.224/26'
+param bastionSubnetPrefix string = '10.70.0.192/26'
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: vnetName
