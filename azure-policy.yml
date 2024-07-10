@@ -5,18 +5,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  RESOURCE_GROUP: 'policy-Notts-rg'
+  LOCATION: 'East US'
   azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'policy-Notts-rg'
-  location: 'eastus'
-#   storageAccountName: 'nottscounty01010202'
-#   vnetName: 'notts-vnet'
-#   firewallName: 'fwnotts'
-#   gatewayName: 'vpnGWnotts'
-#   bastionHostName: 'bastionnotts'
-#   logAnalyticsWorkspaceName: 'nottsLogAnalytics'
-#   appGatewayName: 'nottsAppGateway'
-  # policyAssignmentName: 'nottsPolicyAssignment'
-  
+
 steps:
 - task: AzureCLI@2
   inputs:
@@ -24,17 +16,14 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      # Login to Azure
-      az account set --subscription $(azureSubscription)
+      # Ensure Azure CLI is updated to the latest version
+      az upgrade --yes
 
-      # Create Resource Group if it doesn't exist
-      az group create --name $(resourceGroupName) --location $(location)
+      # Create resource group if it doesn't exist
+      az group create --name $RESOURCE_GROUP --location "$LOCATION"
 
-      # Deploy the Bicep template
+      # Deploy the main Bicep template
       az deployment group create \
-        --resource-group $(resourceGroupName) \
-        --template-file /main.bicep /
-        # --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
-        # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
-        --parameters policyDefinitionName='auditRegionsPolicy' policyDisplayName='Audit resources in allowed regions' policyDescription='This policy audits resources that are deployed in non-allowed regions.' allowedRegions='["East US","West US","Central US"]'
+        --resource-group $RESOURCE_GROUP \
+        --template-file main.bicep
   displayName: 'Deploy Bicep Template'
