@@ -1,4 +1,3 @@
-// policies/policyModule.bicep
 param policyDefinitionName string
 param policyDisplayName string
 param policyDescription string
@@ -6,6 +5,7 @@ param allowedRegions array
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: policyDefinitionName
+  scope: subscription()
   properties: {
     policyType: 'Custom'
     mode: 'All'
@@ -45,14 +45,13 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
   name: '${policyDefinitionName}-assignment'
+  scope: subscription()
   properties: {
     displayName: policyDisplayName
     policyDefinitionId: policyDefinition.id
     parameters: {
       allowedRegions: {
-        value: [
-          'East US'
-        ]
+        value: allowedRegions
       }
     }
   }
