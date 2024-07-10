@@ -1,4 +1,3 @@
-// main.bicep
 module policyModule 'policies/policyModule.bicep' = {
   name: 'deployAuditRegionsPolicy'
   params: {
