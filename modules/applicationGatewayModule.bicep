@@ -3,7 +3,7 @@ param location string
 param appGatewaySubnetId string
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: 'afwpip-tpranly-hub-use-001'
+  name: 'agwpip-tpranly-hub-use-001'
   location: location
   sku: {
     name: 'Standard'
