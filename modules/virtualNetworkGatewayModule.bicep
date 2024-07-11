@@ -4,7 +4,7 @@ param gatewaySubnetId string
 param publicIpName string
 
 resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: publicIpName
+  name: 'vgwpip-tpranly-hub-use-001'
   location: location
   sku: {
     name: 'Standard'
