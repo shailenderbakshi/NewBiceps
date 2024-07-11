@@ -6,15 +6,15 @@ pool:
 
 variables:
   azureSubscription: 'Shail-Subs'
-  resourceGroupName: 'rg-trpany-use-001'
+  resourceGroupName: 'rg-tpranly-hub-use-001'
   location: 'eastus'
   storageAccountName: 'nottscounty01010202'
-  vnetName: 'vnet-tprany-use-001'
-  firewallName: 'fw-tprany-use-001'
-  gatewayName: 'vgw-tprany-use-001'
-  bastionHostName: 'bas-tprany-use-001'
-  logAnalyticsWorkspaceName: 'log-tprany-use-001'
-  appGatewayName: 'agw-pcare-use-001'
+  vnetName: 'vnet-tpranly-hub-use'
+  firewallName: 'afw-tpranly-hub-use-001'
+  gatewayName: 'vgw-tpranly-hub-use-001'
+  bastionHostName: 'bas-tpranly-hub-use-001'
+  logAnalyticsWorkspaceName: 'log-tpranly-hub-use-001'
+  appGatewayName: 'agw-tpranly-hub-use-001'
   # policyAssignmentName: 'nottsPolicyAssignment'
   
 steps:
