@@ -4,7 +4,7 @@ param bastionSubnetId string
 param publicIpName string
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: "baspip-tpranly-hub-use-001"
+  name: 'baspip-tpranly-hub-use-001'
   location: location
   sku: {
     name: 'Standard'
