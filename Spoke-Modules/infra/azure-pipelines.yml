@@ -1,5 +1,5 @@
 trigger:
-- main
+- none
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -13,6 +13,8 @@ variables:
     - managerapp
     - mirth
     - winsrv
+  nsgPrefix: 'nsg-prod-'
+  nicPrefix: 'nic-prod-'
 
 stages:
 - stage: Deploy
@@ -30,5 +32,7 @@ stages:
             --template-file Spoke-Modules/infra/main.bicep \
             --parameters vmPrefix=$(vmPrefix) \
                          vmNameSuffixes=$(vmNameSuffixes) \
-                         adminUsername="gssadmin" \
-                         adminPassword="$Perot20304050"
+                         adminUsername=<admin-username> \
+                         adminPassword=<admin-password> \
+                         nsgPrefix=$(nsgPrefix) \
+                         nicPrefix=$(nicPrefix)
