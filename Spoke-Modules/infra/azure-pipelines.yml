@@ -24,7 +24,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az account set --subscription "$(azureSubscription)"
+          az account set --subscription $(azureSubscription)
           az group create --name $(resourceGroup) --location $(location)
           az deployment group create \
             --resource-group $(resourceGroup) \
