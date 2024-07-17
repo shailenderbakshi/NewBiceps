@@ -1,34 +1,39 @@
 trigger:
-- main
+- none
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
   azureSubscription: 'Shail-Subs'
-  resourceGroup: 'rg-tpr-app-use-001'
-  location: 'East US'
-  vmPrefix: 'vm-prod-'
-  vmNameSuffixes: |
-    - managerapp
-    - mirth
-    - winsrv
+  resourceGroupName: 'rg-tpranly-hub-use-001'
+  location: 'eastus'
+  storageAccountName: 'nottscounty01010202'
+  vnetName: 'vnet-tpranly-hub-use'
+  firewallName: 'afw-tpranly-hub-use-001'
+  gatewayName: 'vgw-tpranly-hub-use-001'
+  bastionHostName: 'bas-tpranly-hub-use-001'
+  logAnalyticsWorkspaceName: 'log-tpranly-hub-use-001'
+  appGatewayName: 'agw-tpranly-hub-use-001'
+  # policyAssignmentName: 'nottsPolicyAssignment'
+  
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      # Login to Azure
+      az account set --subscription $(azureSubscription)
 
-stages:
-- stage: Deploy
-  jobs:
-  - job: DeployInfrastructure
-    steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: $(azureSubscription)
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az deployment group create \
-            --resource-group $(resourceGroup) \
-            --template-file Spoke-modules/main.bicep \
-            --parameters vmPrefix=$(vmPrefix) \
-                         vmNameSuffixes=$(vmNameSuffixes) \
-                         adminUsername=<admin-username> \
-                         adminPassword=<admin-password>
+      # Create Resource Group if it doesn't exist
+      az group create --name $(resourceGroupName) --location $(location)
+
+      # Deploy the Bicep template
+      az deployment group create \
+        --resource-group $(resourceGroupName) \
+        --template-file main.bicep \
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
+        # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
+  displayName: 'Deploy Bicep Template'
