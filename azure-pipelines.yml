@@ -1,5 +1,5 @@
 trigger:
-- none
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -27,8 +27,8 @@ stages:
         inlineScript: |
           az deployment group create \
             --resource-group $(resourceGroup) \
-            --template-file main.bicep \
+            --template-file Spoke-modules/main.bicep \
             --parameters vmPrefix=$(vmPrefix) \
                          vmNameSuffixes=$(vmNameSuffixes) \
-                         adminUsername= "gssadmin" \
-                         adminPassword="$Perot20304050"
+                         adminUsername=<admin-username> \
+                         adminPassword=<admin-password>
