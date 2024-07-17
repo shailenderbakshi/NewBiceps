@@ -1,10 +1,11 @@
-param nicName string
+param nicPrefix string
+param nicSuffix string
 param location string
 param subnetId string
 param nsgId string
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-02-01' = {
-  name: nicName
+  name: '${nicPrefix}${nicSuffix}'
   location: location
   properties: {
     ipConfigurations: [
