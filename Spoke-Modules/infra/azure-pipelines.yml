@@ -24,6 +24,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
+          az account set --subscription "$(azureSubscription)"
           az deployment group create \
             --resource-group $(resourceGroup) \
             --template-file Spoke-Modules/infra/main.bicep \
