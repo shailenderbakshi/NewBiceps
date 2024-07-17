@@ -9,10 +9,7 @@ variables:
   resourceGroup: 'rg-tpr-app-use-001'
   location: 'East US'
   vmPrefix: 'vm-prod-'
-  vmNameSuffixes: |
-    - managerapp
-    - mirth
-    - winsrv
+  vmNameSuffixes: '["managerapp","mirth","winsrv"]'
   nsgPrefix: 'nsg-prod-'
   nicPrefix: 'nic-prod-'
 
@@ -33,7 +30,7 @@ stages:
             --parameters \
               vmPrefix=$(vmPrefix) \
               vmNameSuffixes=$(vmNameSuffixes) \
-              adminUsername="gssadmin" \
-              adminPassword="$Perot20304050" \
+              adminUsername='gaadmin' \
+              adminPassword='$Perot20304050' \
               nsgPrefix=$(nsgPrefix) \
               nicPrefix=$(nicPrefix)
