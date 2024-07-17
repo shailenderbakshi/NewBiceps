@@ -18,20 +18,28 @@ stages:
   jobs:
   - job: DeployInfrastructure
     steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: $(azureSubscription)
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          az account set --subscription $(azureSubscription)
-          az group create --name $(resourceGroup) --location $(location)
-          az deployment group create \
-            --resource-group $(resourceGroup) \
-            --template-file Spoke-Modules/infra/main.bicep \
-            --parameters vmPrefix=$(vmPrefix) \
-                         vmNameSuffixes='$(vmNameSuffixes)' \
-                         adminUsername='gssadmin' \
-                         adminPassword='$Perot20304050' \
-                         nsgPrefix=$(nsgPrefix) \
-                         nicPrefix=$(nicPrefix)
+    - script: |
+        echo "Setting Azure subscription to $(azureSubscription)"
+        az account set --subscription "$(azureSubscription)"
+        
+        echo "Current subscription:"
+        az account show
+        
+        echo "Creating resource group $(resourceGroup) in location $(location)"
+        az group create --name $(resourceGroup) --location $(location)
+        
+        echo "Verifying resource group $(resourceGroup)"
+        az group show --name $(resourceGroup) --output table
+        
+        echo "Deploying Bicep templates"
+        az deployment group create \
+          --resource-group $(resourceGroup) \
+          --template-file Spoke-Modules/infra/main.bicep \
+          --parameters vmPrefix=$(vmPrefix) \
+                       vmNameSuffixes='$(vmNameSuffixes)' \
+                       adminUsername='gssadmin' \
+                       adminPassword='$Perot20304050' \
+                       nsgPrefix=$(nsgPrefix) \
+                       nicPrefix=$(nicPrefix)
+      displayName: 'Deploy Infrastructure'
+      failOnStderr: true
