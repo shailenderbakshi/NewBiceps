@@ -1,18 +1,19 @@
-param vmName string
+param vmPrefix string
+param vmNameSuffix string
 param adminUsername string
 param adminPassword string
 param location string
 param nicId string
 
 resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
-  name: vmName
+  name: '${vmPrefix}${vmNameSuffix}'
   location: location
   properties: {
     hardwareProfile: {
       vmSize: 'Standard_B2ms'
     }
     osProfile: {
-      computerName: vmName
+      computerName: '${vmPrefix}${vmNameSuffix}'
       adminUsername: adminUsername
       adminPassword: adminPassword
     }
