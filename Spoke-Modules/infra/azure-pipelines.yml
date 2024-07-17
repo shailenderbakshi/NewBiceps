@@ -1,0 +1,34 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'pcare TPR production'
+  resourceGroup: 'rg-tpr-app-use-001'
+  location: 'East US'
+  vmPrefix: 'vm-prod-'
+  vmNameSuffixes: |
+    - managerapp
+    - mirth
+    - winsrv
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployInfrastructure
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: $(azureSubscription)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az deployment group create \
+            --resource-group $(resourceGroup) \
+            --template-file Spoke-Modules/infra/main.bicep \
+            --parameters vmPrefix=$(vmPrefix) \
+                         vmNameSuffixes=$(vmNameSuffixes) \
+                         adminUsername=<admin-username> \
+                         adminPassword=<admin-password>
