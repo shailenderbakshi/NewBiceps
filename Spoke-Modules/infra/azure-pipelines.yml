@@ -32,7 +32,7 @@ stages:
             --template-file Spoke-Modules/infra/main.bicep \
             --parameters vmPrefix=$(vmPrefix) \
                          vmNameSuffixes=$(vmNameSuffixes) \
-                         adminUsername=<admin-username> \
-                         adminPassword=<admin-password> \
+                         adminUsername="gssadmin" \
+                         adminPassword="$Perot20304050" \
                          nsgPrefix=$(nsgPrefix) \
                          nicPrefix=$(nicPrefix)
