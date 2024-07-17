@@ -6,40 +6,34 @@ pool:
 
 variables:
   azureSubscription: 'Shail-Subs'
-  resourceGroup: 'rg-tpr-app-use-001'
-  location: 'East US'
-  vmPrefix: 'vm-prod-'
-  vmNameSuffixes: '["managerapp","mirth","winsrv"]'
-  nsgPrefix: 'nsg-prod-'
-  nicPrefix: 'nic-prod-'
+  resourceGroupName: 'rg-tpranly-hub-use-001'
+  location: 'eastus'
+  storageAccountName: 'nottscounty01010202'
+  vnetName: 'vnet-tpranly-hub-use'
+  firewallName: 'afw-tpranly-hub-use-001'
+  gatewayName: 'vgw-tpranly-hub-use-001'
+  bastionHostName: 'bas-tpranly-hub-use-001'
+  logAnalyticsWorkspaceName: 'log-tpranly-hub-use-001'
+  appGatewayName: 'agw-tpranly-hub-use-001'
+  # policyAssignmentName: 'nottsPolicyAssignment'
+  
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      # Login to Azure
+      az account set --subscription $(azureSubscription)
 
-stages:
-- stage: Deploy
-  jobs:
-  - job: DeployInfrastructure
-    steps:
-    - script: |
-        echo "Setting Azure subscription to $(azureSubscription)"
-        az account set --subscription "$(azureSubscription)"
-        
-        echo "Current subscription:"
-        az account show
-        
-        echo "Creating resource group $(resourceGroup) in location $(location)"
-        az group create --name $(resourceGroup) --location $(location)
-        
-        echo "Checking if resource group $(resourceGroup) exists"
-        az group show --name $(resourceGroup) --output table
-        
-        echo "Deploying Bicep templates"
-        az deployment group create \
-          --resource-group $(resourceGroup) \
-          --template-file Spoke-Modules/infra/main.bicep \
-          --parameters vmPrefix=$(vmPrefix) \
-                       vmNameSuffixes='$(vmNameSuffixes)' \
-                       adminUsername='gssadmin' \
-                       adminPassword='$Perot202030' \
-                       nsgPrefix=$(nsgPrefix) \
-                       nicPrefix=$(nicPrefix)
-      displayName: 'Deploy Infrastructure'
-      failOnStderr: true
+      # Create Resource Group if it doesn't exist
+      az group create --name $(resourceGroupName) --location $(location)
+
+      # Deploy the Bicep template
+      az deployment group create \
+        --resource-group $(resourceGroupName) \
+        --template-file main.bicep \
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
+        # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
+  displayName: 'Deploy Bicep Template'
