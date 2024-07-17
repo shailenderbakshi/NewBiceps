@@ -1,8 +1,9 @@
-param nsgName string
+param nsgPrefix string
+param nsgSuffix string
 param location string
 
 resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
-  name: nsgName
+  name: '${nsgPrefix}${nsgSuffix}'
   location: location
   properties: {
     securityRules: [
