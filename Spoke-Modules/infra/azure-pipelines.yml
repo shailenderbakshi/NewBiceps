@@ -28,8 +28,8 @@ stages:
             --resource-group $(resourceGroup) \
             --template-file Spoke-Modules/infra/main.bicep \
             --parameters vmPrefix=$(vmPrefix) \
-                         vmNameSuffixes="$(vmNameSuffixes)" \
+                         vmNameSuffixes='$(vmNameSuffixes)' \
                          adminUsername='gssadmin' \
-                         adminPassword='$Perot20304050' \
+                         adminPassword='Perot20304050' \
                          nsgPrefix=$(nsgPrefix) \
                          nicPrefix=$(nicPrefix)
