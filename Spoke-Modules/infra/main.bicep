@@ -3,6 +3,8 @@ param vmNameSuffixes array
 param adminUsername string
 param adminPassword string
 param location string = 'East US'
+param nsgPrefix string = 'nsg-prod-'
+param nicPrefix string = 'nic-prod-'
 
 module vnetModule '../modules/vnet.bicep' = {
   name: 'vnetDeployment'
@@ -12,21 +14,23 @@ module vnetModule '../modules/vnet.bicep' = {
   }
 }
 
-module nsgModule '../modules/nsg.bicep' = {
-  name: 'nsgDeployment'
+module nsgModule '../modules/nsg.bicep' = [for vmNameSuffix in vmNameSuffixes: {
+  name: 'nsgDeployment-${vmNameSuffix}'
   params: {
-    nsgName: 'nsg-prod-managerapp'
+    nsgPrefix: nsgPrefix
+    nsgSuffix: vmNameSuffix
     location: location
   }
-}
+}]
 
-module nicModule '../modules/nic.bicep' = [for vmNameSuffix in vmNameSuffixes: {
+module nicModule '../modules/nic.bicep' = [for (vmNameSuffix, i) in vmNameSuffixes: {
   name: 'nicDeployment-${vmNameSuffix}'
   params: {
-    nicName: '${vmPrefix}${vmNameSuffix}'
+    nicPrefix: nicPrefix
+    nicSuffix: vmNameSuffix
     location: location
     subnetId: vnetModule.outputs.subnetId
-    nsgId: nsgModule.outputs.nsgId
+    nsgId: nsgModule[i].outputs.nsgId
   }
 }]
 
