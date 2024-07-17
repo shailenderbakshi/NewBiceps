@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'Shail-Subs'
+  azureSubscription: '2fae94b1-7a9f-489c-bf7c-877563309b5c'
   resourceGroup: 'rg-tpr-app-use-001'
   location: 'East US'
   vmPrefix: 'vm-prod-'
