@@ -4,7 +4,7 @@ param adminUsername string
 param adminPassword string
 param location string = 'East US'
 
-module vnetModule 'vnet.bicep' = {
+module vnetModule './modules/vnet.bicep' = {
   name: 'vnetDeployment'
   params: {
     vnetName: 'vnet-tpr-app-use'
@@ -12,7 +12,7 @@ module vnetModule 'vnet.bicep' = {
   }
 }
 
-module nsgModule 'nsg.bicep' = {
+module nsgModule './modules/nsg.bicep' = {
   name: 'nsgDeployment'
   params: {
     nsgName: 'nsg-prod-managerapp'
@@ -20,7 +20,7 @@ module nsgModule 'nsg.bicep' = {
   }
 }
 
-module nicModule 'nic.bicep' = [for vmNameSuffix in vmNameSuffixes: {
+module nicModule './modules/nic.bicep' = [for vmNameSuffix in vmNameSuffixes: {
   name: 'nicDeployment-${vmNameSuffix}'
   params: {
     nicName: '${vmPrefix}${vmNameSuffix}'
@@ -30,7 +30,7 @@ module nicModule 'nic.bicep' = [for vmNameSuffix in vmNameSuffixes: {
   }
 }]
 
-module vmModule 'vm.bicep' = [for (vmNameSuffix, i) in vmNameSuffixes: {
+module vmModule './modules/vm.bicep' = [for (vmNameSuffix, i) in vmNameSuffixes: {
   name: 'vmDeployment-${vmNameSuffix}'
   params: {
     vmPrefix: vmPrefix
