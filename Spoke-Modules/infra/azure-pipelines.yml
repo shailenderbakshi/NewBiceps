@@ -1,5 +1,5 @@
 trigger:
-- none
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -30,9 +30,10 @@ stages:
           az deployment group create \
             --resource-group $(resourceGroup) \
             --template-file Spoke-Modules/infra/main.bicep \
-            --parameters vmPrefix=$(vmPrefix) \
-                         vmNameSuffixes=$(vmNameSuffixes) \
-                         adminUsername="gssadmin" \
-                         adminPassword="$Perot20304050" \
-                         nsgPrefix=$(nsgPrefix) \
-                         nicPrefix=$(nicPrefix)
+            --parameters \
+              vmPrefix=$(vmPrefix) \
+              vmNameSuffixes=$(vmNameSuffixes) \
+              adminUsername="gssadmin" \
+              adminPassword="$Perot20304050" \
+              nsgPrefix=$(nsgPrefix) \
+              nicPrefix=$(nicPrefix)
