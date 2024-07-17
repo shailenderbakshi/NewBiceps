@@ -1,43 +1,107 @@
-param vmPrefix string = 'vm-prod-'
-param vmNameSuffixes array
-param adminUsername string
-param adminPassword string
-param location string = 'East US'
+param storageAccountName string
+param vnetName string
+param firewallName string
+param gatewayName string
+param bastionHostName string
+param logAnalyticsWorkspaceName string
+param appGatewayName string
+// param policyAssignmentName string
+param location string = resourceGroup().location
 
-module vnetModule './modules/vnet.bicep' = {
-  name: 'vnetDeployment'
+module storageAccountModule 'modules/storageAccountModule.bicep' = {
+  name: 'storageAccountDeployment'
   params: {
-    vnetName: 'vnet-tpr-app-use'
+    storageAccountName: storageAccountName
     location: location
   }
 }
 
-module nsgModule './modules/nsg.bicep' = {
-  name: 'nsgDeployment'
+module virtualNetworkModule 'modules/virtualNetworkModule.bicep' = {
+  name: 'virtualNetworkDeployment'
   params: {
-    nsgName: 'nsg-prod-managerapp'
+    vnetName: vnetName
     location: location
   }
 }
 
-module nicModule './modules/nic.bicep' = [for vmNameSuffix in vmNameSuffixes: {
-  name: 'nicDeployment-${vmNameSuffix}'
+module azureFirewallModule 'modules/azureFirewallModule.bicep' = {
+  name: 'azureFirewallDeployment'
   params: {
-    nicName: '${vmPrefix}${vmNameSuffix}'
+    firewallName: firewallName
     location: location
-    subnetId: vnetModule.outputs.subnetId
-    nsgId: nsgModule.outputs.nsgId
+    vnetId: virtualNetworkModule.outputs.vnetId
+    firewallSubnetId: virtualNetworkModule.outputs.firewallSubnetId
   }
-}]
+}
 
-module vmModule './modules/vm.bicep' = [for (vmNameSuffix, i) in vmNameSuffixes: {
-  name: 'vmDeployment-${vmNameSuffix}'
+module virtualNetworkGatewayModule 'modules/virtualNetworkGatewayModule.bicep' = {
+  name: 'virtualNetworkGatewayDeployment'
   params: {
-    vmPrefix: vmPrefix
-    vmNameSuffix: vmNameSuffix
-    adminUsername: adminUsername
-    adminPassword: adminPassword
+    gatewayName: gatewayName
     location: location
-    nicId: nicModule[i].outputs.nicId
+    gatewaySubnetId: virtualNetworkModule.outputs.gatewaySubnetId
+    publicIpName: '${gatewayName}-pip'
   }
-}]
+}
+
+module bastionHostModule 'modules/bastionHostModule.bicep' = {
+  name: 'bastionHostDeployment'
+  params: {
+    bastionHostName: bastionHostName
+    location: location
+    bastionSubnetId: virtualNetworkModule.outputs.bastionSubnetId
+    publicIpName: '${bastionHostName}-pip'
+  }
+}
+
+module logAnalyticsWorkspaceModule 'modules/logAnalyticsWorkspaceModule.bicep' = {
+  name: 'logAnalyticsWorkspaceDeployment'
+  params: {
+    workspaceName: logAnalyticsWorkspaceName
+    location: location
+  }
+}
+
+module networkWatcherModule 'modules/networkWatcherModule.bicep' = {
+  name: 'networkWatcherDeployment'
+  params: {
+    location: location
+  }
+}
+
+module applicationGatewayModule 'modules/applicationGatewayModule.bicep' = {
+  name: 'applicationGatewayDeployment'
+  params: {
+    appGatewayName: appGatewayName
+    location: location
+    appGatewaySubnetId: virtualNetworkModule.outputs.appGatewaySubnetId
+  }
+}
+
+// module azurePolicyModule 'modules/azurePolicyModule.bicep' = {
+//   name: 'azurePolicyDeployment'
+//   params: {
+//     policyAssignmentName: policyAssignmentName
+//     location: location
+//   }
+// }
+
+output storageAccountId string = storageAccountModule.outputs.storageAccountId
+output storageAccountPrimaryEndpoint string = storageAccountModule.outputs.storageAccountPrimaryEndpoint
+output vnetId string = virtualNetworkModule.outputs.vnetId
+// output subnetId string = virtualNetworkModule.outputs.subnetId
+output firewallSubnetId string = virtualNetworkModule.outputs.firewallSubnetId
+output gatewaySubnetId string = virtualNetworkModule.outputs.gatewaySubnetId
+output bastionSubnetId string = virtualNetworkModule.outputs.bastionSubnetId
+output firewallId string = azureFirewallModule.outputs.firewallId
+output firewallPublicIPId string = azureFirewallModule.outputs.publicIPId
+output gatewayId string = virtualNetworkGatewayModule.outputs.gatewayId
+output gatewayPublicIPId string = virtualNetworkGatewayModule.outputs.publicIPId
+output bastionHostId string = bastionHostModule.outputs.bastionHostId
+output bastionPublicIPId string = bastionHostModule.outputs.publicIPId
+output logAnalyticsWorkspaceId string = logAnalyticsWorkspaceModule.outputs.workspaceId
+output networkWatcherId string = networkWatcherModule.outputs.networkWatcherId
+output appGatewayId string = applicationGatewayModule.outputs.appGatewayId
+output appGatewayPublicIPId string = applicationGatewayModule.outputs.publicIPId
+// output policyDefinitionId string = azurePolicyModule.outputs.policyDefinitionId
+// output policyAssignmentId string = azurePolicyModule.outputs.policyAssignmentId
