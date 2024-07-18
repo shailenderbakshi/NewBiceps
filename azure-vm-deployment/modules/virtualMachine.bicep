@@ -3,6 +3,8 @@ param vmName string
 param adminUsername string
 param adminPassword string
 param subnetId string
+param vmSize string = 'Standard_B2ms'
+param osDiskSizeGB int = 128
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   name: '${vmName}-nic'
@@ -27,7 +29,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
   location: location
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_D2s_v3'
+      vmSize: vmSize
     }
     osProfile: {
       computerName: vmName
@@ -44,8 +46,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2022-03-01' = {
       osDisk: {
         createOption: 'FromImage'
         managedDisk: {
-          storageAccountType: 'Standard_LRS'
+          storageAccountType: 'Premium_LRS'
         }
+        diskSizeGB: osDiskSizeGB
       }
     }
     networkProfile: {
