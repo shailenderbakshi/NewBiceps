@@ -32,7 +32,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   properties: {
     addressSpace: {
       addressPrefixes: [
-        '10.80.2.0/24'
+        '10.80.3.0/24'
       ]
     }
   }
@@ -42,7 +42,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   name: subnetName
   parent: vnet
   properties: {
-    addressPrefix: '10.80.2.0/26'
+    addressPrefix: '10.80.3.0/26'
   }
 }
 
