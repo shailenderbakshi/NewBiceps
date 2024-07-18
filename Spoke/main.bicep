@@ -1,5 +1,6 @@
-// Parameters for vm-prod-manager
 param vmName1 string = 'vm-prod-manager'
+param vmName2 string = 'vm-prod-mirth'
+param vmName3 string = 'vm-prod-winsrv'
 param adminUsername string
 param adminPassword string
 
@@ -13,47 +14,28 @@ param osDiskSizeGB int = 128
 param vnetName string = 'vnet-tpr-app-use'
 param subnetName string = 'snet-tpr-app-use'
 param nicName1 string = 'nic-prod-manager'
+param nicName2 string = 'nic-prod-mirth'
+param nicName3 string = 'nic-prod-winsrv'
 param nsgName string = 'nsg-prod-manager'
 param osType string = 'Windows'
 param osVersion string = '2022-Datacenter'
 
-// Parameters for vm-prod-mirth
-param vmName2 string = 'vm-prod-mirth'
-param nicName2 string = 'nic-prod-mirth'
-
-// Parameters for vm-prod-winsrv
-param vmName3 string = 'vm-prod-winsrv'
-param nicName3 string = 'nic-prod-winsrv'
-
-// Existing virtual network and subnet
-resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
   name: vnetName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.80.2.0/24'
-      ]
-    }
-  }
+  resourceGroupName: resourceGroupName
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
   name: subnetName
   parent: vnet
-  properties: {
-    addressPrefix: '10.80.2.0/26'
-  }
 }
 
-// Network security group
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' existing = {
   name: nsgName
-  location: location
+  resourceGroupName: resourceGroupName
 }
 
-// Network interface for vm-prod-manager
-resource nic1 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource nic1 'Microsoft.Network/networkInterfaces@2021-05-01' = if (!exists('Microsoft.Network/networkInterfaces', nicName1)) {
   name: nicName1
   location: location
   properties: {
@@ -74,8 +56,7 @@ resource nic1 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   }
 }
 
-// Network interface for vm-prod-mirth
-resource nic2 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource nic2 'Microsoft.Network/networkInterfaces@2021-05-01' = if (!exists('Microsoft.Network/networkInterfaces', nicName2)) {
   name: nicName2
   location: location
   properties: {
@@ -96,8 +77,7 @@ resource nic2 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   }
 }
 
-// Network interface for vm-prod-winsrv
-resource nic3 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource nic3 'Microsoft.Network/networkInterfaces@2021-05-01' = if (!exists('Microsoft.Network/networkInterfaces', nicName3)) {
   name: nicName3
   location: location
   properties: {
@@ -118,8 +98,7 @@ resource nic3 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   }
 }
 
-// Virtual machine vm-prod-manager
-resource vm1 'Microsoft.Compute/virtualMachines@2021-07-01' = {
+resource vm1 'Microsoft.Compute/virtualMachines@2021-07-01' = if (!exists('Microsoft.Compute/virtualMachines', vmName1)) {
   name: vmName1
   location: location
   properties: {
@@ -155,13 +134,9 @@ resource vm1 'Microsoft.Compute/virtualMachines@2021-07-01' = {
       ]
     }
   }
-  dependsOn: [
-    nic1
-  ]
 }
 
-// Virtual machine vm-prod-mirth
-resource vm2 'Microsoft.Compute/virtualMachines@2021-07-01' = {
+resource vm2 'Microsoft.Compute/virtualMachines@2021-07-01' = if (!exists('Microsoft.Compute/virtualMachines', vmName2)) {
   name: vmName2
   location: location
   properties: {
@@ -197,13 +172,9 @@ resource vm2 'Microsoft.Compute/virtualMachines@2021-07-01' = {
       ]
     }
   }
-  dependsOn: [
-    nic2
-  ]
 }
 
-// Virtual machine vm-prod-winsrv
-resource vm3 'Microsoft.Compute/virtualMachines@2021-07-01' = {
+resource vm3 'Microsoft.Compute/virtualMachines@2021-07-01' = if (!exists('Microsoft.Compute/virtualMachines', vmName3)) {
   name: vmName3
   location: location
   properties: {
@@ -239,7 +210,4 @@ resource vm3 'Microsoft.Compute/virtualMachines@2021-07-01' = {
       ]
     }
   }
-  dependsOn: [
-    nic3
-  ]
 }
