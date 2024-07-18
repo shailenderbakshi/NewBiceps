@@ -50,7 +50,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
 }
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [for name in [
-  'vm-prod-managerapp', 'vm-prod-mirth', 'vm-prod-winsrv'
+  'vm-prod-manager', 'vm-prod-mirth', 'vm-prod-winsrv'
 ]: {
   name: 'nic-${name}'
   location: location
@@ -73,7 +73,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [fo
 }]
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for (name, index) in [
-  'vm-prod-managerapp', 'vm-prod-mirth', 'vm-prod-winsrv'
+  'vm-prod-manager', 'vm-prod-mirth', 'vm-prod-winsrv'
 ]: {
   name: name
   location: location
@@ -85,30 +85,3 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for (n
       computerName: name
       adminUsername: adminUsername
       adminPassword: adminPassword
-    }
-    storageProfile: {
-      imageReference: {
-        publisher: 'MicrosoftWindowsServer'
-        offer: 'WindowsServer'
-        sku: '2022-Datacenter'
-        version: 'latest'
-      }
-      osDisk: {
-        name: 'Disk-${name}-OS1'
-        caching: 'ReadWrite'
-        managedDisk: {
-          storageAccountType: 'Premium_LRS'
-        }
-        diskSizeGB: 128
-        createOption: 'FromImage'
-      }
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface[index].id
-        }
-      ]
-    }
-  }
-}]
