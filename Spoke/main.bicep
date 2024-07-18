@@ -20,10 +20,10 @@ param nsgName string = 'nsg-prod-manager'
 param osType string = 'Windows'
 param osVersion string = '2022-Datacenter'
 
-resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
-  name: vnetName
-  resourceGroupName: resourceGroupName
-}
+// resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
+//   name: vnetName
+//   resourceGroupName: resourceGroupName
+// }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
   name: subnetName
