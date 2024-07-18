@@ -16,22 +16,19 @@ module virtualNetwork './modules/virtualNetwork.bicep' = {
   }
 }
 
-var subnetId = virtualNetwork.outputs.subnetId
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
+  parent: virtualNetwork
+  name: 'default'
+}
 
-@batch(
-  scope: resourceGroup(),
-  dependsOn: [
-    virtualNetwork
-  ]
-)
-module virtualMachines 'modules/virtualMachine.bicep' = [for vmName in vmNames: {
+module virtualMachines './modules/virtualMachine.bicep' = [for vmName in vmNames: {
   name: 'virtualMachine-${vmName}'
   params: {
     location: location
     vmName: vmName
     adminUsername: adminUsername
     adminPassword: adminPassword
-    subnetId: subnetId
+    subnetId: subnet.id
     vmSize: 'Standard_B2ms'
     osDiskSizeGB: 128
   }
