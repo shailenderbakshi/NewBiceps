@@ -7,7 +7,7 @@ pool:
 variables:
   azureSubscription: 'Shail-Subs'
   resourceGroupName: 'rg-tpr-app-use-001'
-  location: 'East US'
+  location: 'eastus'
 
 stages:
 - stage: Deploy
