@@ -11,7 +11,7 @@ variables:
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'pCare Analytics/Reporting production'
+    azureSubscription: 'pCare TPR production'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
