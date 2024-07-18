@@ -21,14 +21,29 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   location: location
 }
 
-resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
+resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: vnetName
-  scope: resourceGroup()
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+  }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   name: subnetName
   parent: vnet
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+  }
+}
+
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
+  name: nsgName
+  location: location
 }
 
 resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
@@ -46,12 +61,10 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
         }
       }
     ]
+    networkSecurityGroup: {
+      id: nsg.id
+    }
   }
-}
-
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' existing = {
-  name: nsgName
-  scope: resourceGroup()
 }
 
 resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
