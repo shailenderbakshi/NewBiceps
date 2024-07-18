@@ -14,6 +14,6 @@ steps:
       az group create --name myResourceGroup --location eastus
       az deployment group create \
         --resource-group myResourceGroup \
-        --template-file main.bicep \
+        --template-file \azure-vm-deployment\main.bicep \
         --parameters adminUsername=azureuser adminPassword=YourP@ssword123!
   displayName: 'Deploy Azure VM using Bicep'
