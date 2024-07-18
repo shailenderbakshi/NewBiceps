@@ -85,3 +85,30 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for (n
       computerName: name
       adminUsername: adminUsername
       adminPassword: adminPassword
+    }
+    storageProfile: {
+      imageReference: {
+        publisher: 'MicrosoftWindowsServer'
+        offer: 'WindowsServer'
+        sku: '2022-Datacenter'
+        version: 'latest'
+      }
+      osDisk: {
+        name: 'Disk-${name}-OS1'
+        caching: 'ReadWrite'
+        managedDisk: {
+          storageAccountType: 'Premium_LRS'
+        }
+        diskSizeGB: 128
+        createOption: 'FromImage'
+      }
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface[index].id
+        }
+      ]
+    }
+  }
+}]
