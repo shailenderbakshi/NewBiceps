@@ -21,6 +21,10 @@ param osVersion string = '2022-Datacenter'
 param vmName2 string = 'vm-prod-mirth'
 param nicName2 string = 'nic-prod-mirth'
 
+// Parameters for vm-prod-winsrv
+param vmName3 string = 'vm-prod-winsrv'
+param nicName3 string = 'nic-prod-winsrv'
+
 // Existing virtual network and subnet
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: vnetName
@@ -73,6 +77,28 @@ resource nic1 'Microsoft.Network/networkInterfaces@2021-05-01' = {
 // Network interface for vm-prod-mirth
 resource nic2 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   name: nicName2
+  location: location
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        properties: {
+          subnet: {
+            id: subnet.id
+          }
+          privateIPAllocationMethod: 'Dynamic'
+        }
+      }
+    ]
+    networkSecurityGroup: {
+      id: nsg.id
+    }
+  }
+}
+
+// Network interface for vm-prod-winsrv
+resource nic3 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+  name: nicName3
   location: location
   properties: {
     ipConfigurations: [
@@ -173,5 +199,47 @@ resource vm2 'Microsoft.Compute/virtualMachines@2021-07-01' = {
   }
   dependsOn: [
     nic2
+  ]
+}
+
+// Virtual machine vm-prod-winsrv
+resource vm3 'Microsoft.Compute/virtualMachines@2021-07-01' = {
+  name: vmName3
+  location: location
+  properties: {
+    hardwareProfile: {
+      vmSize: vmSize
+    }
+    osProfile: {
+      computerName: vmName3
+      adminUsername: adminUsername
+      adminPassword: adminPassword
+    }
+    storageProfile: {
+      osDisk: {
+        createOption: 'FromImage'
+        name: 'Disk-prod-winsrv-OS1'
+        diskSizeGB: osDiskSizeGB
+        managedDisk: {
+          storageAccountType: osDiskType
+        }
+      }
+      imageReference: {
+        publisher: 'MicrosoftWindowsServer'
+        offer: 'WindowsServer'
+        sku: osVersion
+        version: 'latest'
+      }
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: nic3.id
+        }
+      ]
+    }
+  }
+  dependsOn: [
+    nic3
   ]
 }
