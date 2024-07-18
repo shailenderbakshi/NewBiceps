@@ -2,7 +2,7 @@ param vmName string = 'vm-prod-manager'
 param adminUsername string
 param adminPassword string
 
-param subscriptionName string = 'Shail-Subs'
+param subscriptionName string = 'pCare Analytics/Reporting production'
 param resourceGroupName string = 'rg-tpr-app-use-001'
 param location string = 'East US'
 param vmSize string = 'Standard_B2ms'
