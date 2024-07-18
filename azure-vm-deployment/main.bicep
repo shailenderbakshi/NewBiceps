@@ -16,9 +16,17 @@ module virtualNetwork './modules/virtualNetwork.bicep' = {
   }
 }
 
+// Existing reference to the virtual network
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-05-01' existing = {
+  name: virtualNetwork.outputs.vnetName
+}
+
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   name: 'default'
-  parent: virtualNetwork.outputs.virtualNetworkResource
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+  }
 }
 
 module virtualMachines './modules/virtualMachine.bicep' = [for vmName in vmNames: {
