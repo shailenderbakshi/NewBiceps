@@ -26,8 +26,10 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing 
   name: subnetName
 }
 
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' existing = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
   name: nsgName
+  location: location
+  properties: {}
 }
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [for name in [
