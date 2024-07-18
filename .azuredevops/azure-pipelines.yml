@@ -29,5 +29,5 @@ stages:
           az deployment group create \
             --resource-group $(resourceGroupName) \
             --template-file bicep/main.bicep \
-            --parameters adminUsername=$(adminUsername) adminPassword=$(adminPassword) location="$(location)"
+            --parameters adminUsername=$(adminUsername) adminPassword= '$Perot20304050' location="$(location)"
       displayName: 'Deploying Bicep Template'
