@@ -55,7 +55,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [fo
   }
 }]
 
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for name in [
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for (name, index) in [
   'vm-prod-managerapp',
   'vm-prod-mirth',
   'vm-prod-winsrv'
@@ -91,7 +91,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for na
     networkProfile: {
       networkInterfaces: [
         {
-          id: networkInterface[name].id
+          id: networkInterface[index].id
         }
       ]
     }
