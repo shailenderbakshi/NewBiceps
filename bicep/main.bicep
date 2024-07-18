@@ -8,6 +8,12 @@ param adminUsername string
 @secure()
 param adminPassword string
 
+@description('The address prefix for the Virtual Network.')
+param virtualNetworkAddressPrefix string = '10.0.0.0/16'
+
+@description('The address prefix for the subnet.')
+param subnetAddressPrefix string = '10.0.1.0/24'
+
 @description('The name of the Virtual Network.')
 param virtualNetworkName string = 'vnet-tpr-app-use'
 
@@ -17,13 +23,24 @@ param subnetName string = 'snet-tpr-app-use'
 @description('The name of the Network Security Group.')
 param nsgName string = 'nsg-prod-managerapp'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' existing = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2021-02-01' = {
   name: virtualNetworkName
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-02-01' existing = {
-  parent: virtualNetwork
-  name: subnetName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        virtualNetworkAddressPrefix
+      ]
+    }
+    subnets: [
+      {
+        name: subnetName
+        properties: {
+          addressPrefix: subnetAddressPrefix
+        }
+      }
+    ]
+  }
 }
 
 resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' = {
@@ -44,7 +61,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [fo
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: subnet.id
+            id: resourceId('Microsoft.Network/virtualNetworks/subnets', virtualNetworkName, subnetName)
           }
         }
       }
