@@ -1,5 +1,5 @@
 trigger:
-- none
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -9,14 +9,13 @@ variables:
   resourceGroupName: 'rg-tpr-app-use-001'
   location: 'East US'
 
-variableGroups:
-- VMSecrets
-
 stages:
 - stage: Deploy
   jobs:
   - job: DeployInfrastructure
     displayName: 'Deploy infrastructure'
+    variables:
+      - group: VMSecrets
     steps:
     - task: AzureCLI@2
       inputs:
