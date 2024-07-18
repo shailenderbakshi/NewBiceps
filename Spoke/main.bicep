@@ -134,7 +134,7 @@ resource vm1 'Microsoft.Compute/virtualMachines@2021-07-01' = {
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
-        name: 'Disk-prod-manager-OS1'
+        name: 'Disk-prod-manager-os'
         diskSizeGB: osDiskSizeGB
         managedDisk: {
           storageAccountType: osDiskType
@@ -176,7 +176,7 @@ resource vm2 'Microsoft.Compute/virtualMachines@2021-07-01' = {
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
-        name: 'Disk-prod-mirth-OS1'
+        name: 'Disk-prod-mirth-os'
         diskSizeGB: osDiskSizeGB
         managedDisk: {
           storageAccountType: osDiskType
@@ -218,7 +218,7 @@ resource vm3 'Microsoft.Compute/virtualMachines@2021-07-01' = {
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
-        name: 'Disk-prod-winsrv-OS1'
+        name: 'Disk-prod-winsrv-os'
         diskSizeGB: osDiskSizeGB
         managedDisk: {
           storageAccountType: osDiskType
