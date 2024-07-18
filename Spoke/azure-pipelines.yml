@@ -11,7 +11,7 @@ variables:
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Shail-Subs'
+    azureSubscription: 'pCare Analytics/Reporting production'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
