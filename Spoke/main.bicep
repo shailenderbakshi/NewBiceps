@@ -16,10 +16,10 @@ param nsgName string = 'nsg-prod-managerapp'
 param osType string = 'Windows'
 param osVersion string = '2022-Datacenter'
 
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: resourceGroupName
-  location: location
-}
+// resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+//   name: resourceGroupName
+//   location: location
+// }
 
 resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: vnetName
