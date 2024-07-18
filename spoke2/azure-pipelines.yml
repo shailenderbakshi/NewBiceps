@@ -16,5 +16,5 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az group create --name rg-anly-app-use-001 --location "eastus"
-      az deployment group create --resource-group rg-anly-app-use-001 --template-file Spoke/main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
+      az deployment group create --resource-group rg-anly-app-use-001 --template-file Spoke2/main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
   displayName: 'Deploy Azure Resources'
