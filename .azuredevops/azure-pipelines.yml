@@ -9,23 +9,18 @@ variables:
   resourceGroupName: 'rg-tpr-app-use-001'
   location: 'East US'
 
-stages:
-- stage: Deploy
-  jobs:
-  - job: DeployInfrastructure
-    displayName: 'Deploy infrastructure'
-    steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: $(azureSubscription)
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        inlineScript: |
-          # Create the resource group if it doesn't exist
-          az group create --name $(resourceGroupName) --location $(location)
-          # Deploy the Bicep template
-          az deployment group create \
-            --resource-group $(resourceGroupName) \
-            --template-file bicep/main.bicep \
-            --parameters adminUsername=$(adminUsername) adminPassword=$(adminPassword)
-      displayName: 'Deploying Bicep Template'
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      # Create the resource group if it doesn't exist
+      az group create --name $(resourceGroupName) --location $(location)
+      # Deploy the Bicep template
+      az deployment group create \
+        --resource-group $(resourceGroupName) \
+        --template-file bicep/main.bicep \
+        --parameters adminUsername=$(adminUsername) adminPassword=$(adminPassword)
+  displayName: 'Deploying Bicep Template'
