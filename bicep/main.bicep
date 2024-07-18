@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string = 'East US'
+param location string = 'eastus'
 
 @description('Admin username for the Virtual Machine.')
 param adminUsername string
@@ -31,9 +31,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2021-02-01' existing = {
 }
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [for name in [
-  'vm-prod-managerapp',
-  'vm-prod-mirth',
-  'vm-prod-winsrv'
+  'vm-prod-managerapp', 'vm-prod-mirth', 'vm-prod-winsrv'
 ]: {
   name: 'nic-${name}'
   location: location
@@ -56,9 +54,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2021-02-01' = [fo
 }]
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2021-03-01' = [for (name, index) in [
-  'vm-prod-managerapp',
-  'vm-prod-mirth',
-  'vm-prod-winsrv'
+  'vm-prod-managerapp', 'vm-prod-mirth', 'vm-prod-winsrv'
 ]: {
   name: name
   location: location
