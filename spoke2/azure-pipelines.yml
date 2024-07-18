@@ -1,0 +1,20 @@
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  adminUsername: 'gssadmin'
+  adminPassword: '$Perot20304050'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'pCare Analytics/Reporting production'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az group create --name rg-anly-app-use-001 --location "eastus"
+      az deployment group create --resource-group rg-anly-app-use-001 --template-file Spoke/main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
+  displayName: 'Deploy Azure Resources'
