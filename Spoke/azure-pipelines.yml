@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  adminUsername: 'gssadmin'
+  adminPassword: '$Perot20304050'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Shail-Subs'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az group create --name rg-tpr-app-use-001 --location "East US"
+      az deployment group create --resource-group rg-tpr-app-use-001 --template-file main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
+  displayName: 'Deploy Azure Resources'
