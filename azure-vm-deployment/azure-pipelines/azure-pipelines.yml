@@ -11,9 +11,9 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      az group create --name myResourceGroup --location eastus
+      az group create --name rg-tpr-app-use-001 --location eastus
       az deployment group create \
-        --resource-group myResourceGroup \
+        --resource-group rg-tpr-app-use-001 \
         --template-file azure-vm-deployment/main.bicep \
         --parameters adminUsername=azureuser adminPassword=YourP@ssword123!
-  displayName: 'Deploy Azure VM using Bicep'
+  displayName: 'Deploy Azure VMs using Bicep'
