@@ -11,8 +11,8 @@ param osDiskSizeGB int = 128
 
 param vnetName string = 'vnet-tpr-app-use'
 param subnetName string = 'snet-tpr-app-use'
-param nicName string = 'nic-prod-managerapp'
-param nsgName string = 'nsg-prod-managerapp'
+param nicName string = 'nic-prod-manager'
+param nsgName string = 'nsg-prod-manager'
 param osType string = 'Windows'
 param osVersion string = '2022-Datacenter'
 
@@ -82,7 +82,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
-        name: 'Disk-prod-Vmname-OS1'
+        name: 'Disk-prod-manager-OS1'
         diskSizeGB: osDiskSizeGB
         managedDisk: {
           storageAccountType: osDiskType
