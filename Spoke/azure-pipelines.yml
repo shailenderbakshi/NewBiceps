@@ -16,5 +16,5 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az group create --name rg-tpr-app-use-001 --location "East US"
-      az deployment group create --resource-group rg-tpr-app-use-001 --template-file main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
+      az deployment group create --resource-group rg-tpr-app-use-001 --template-file Spoke/main.bicep --parameters adminUsername='$(adminUsername)' adminPassword='$(adminPassword)'
   displayName: 'Deploy Azure Resources'
