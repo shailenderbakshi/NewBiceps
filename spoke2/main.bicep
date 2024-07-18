@@ -10,7 +10,7 @@ param osDiskType string = 'Premium_LRS'
 param osDiskSizeGB int = 128
 
 param vnetName string = 'vnet-anly-app-use'
-param subnetName string = 'snet-anly-app-use'
+param subnetName string = 'snet-analytics-app-use'
 param nicName string = 'nic-prod-analyt'
 param nsgName string = 'nsg-prod-analyt'
 param osType string = 'Windows'
