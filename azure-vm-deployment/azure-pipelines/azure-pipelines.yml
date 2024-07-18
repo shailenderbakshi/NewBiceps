@@ -1,0 +1,19 @@
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Shail-Subs'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az group create --name myResourceGroup --location eastus
+      az deployment group create \
+        --resource-group myResourceGroup \
+        --template-file main.bicep \
+        --parameters adminUsername=azureuser adminPassword=YourP@ssword123!
+  displayName: 'Deploy Azure VM using Bicep'
