@@ -8,8 +8,6 @@ variables:
   azureSubscription: 'Shail-Subs'
   resourceGroupName: 'rg-tpr-app-use-001'
   location: 'East US'
-  adminUsername: 'gssadmin'  # Replace with the actual admin username
-  adminPassword: '$Perot20304050'  # Replace with the actual admin password
 
 stages:
 - stage: Deploy
@@ -28,6 +26,6 @@ stages:
           # Deploy the Bicep template
           az deployment group create \
             --resource-group $(resourceGroupName) \
-            --template-file main.bicep \
+            --template-file bicep/main.bicep \
             --parameters adminUsername=$(adminUsername) adminPassword=$(adminPassword)
       displayName: 'Deploying Bicep Template'
