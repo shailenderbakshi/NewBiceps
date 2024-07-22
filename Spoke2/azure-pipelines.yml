@@ -5,8 +5,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  adminUsername: 'gssadmin'
-  adminPassword: '$Perot20304050'
+  adminUsername: 'tvrsa'
+  adminPassword: '1@a88DF7C47!'
 
 steps:
 - task: AzureCLI@2
