@@ -1,4 +1,4 @@
-param vmName string = 'vm-prod-analyt'
+param vmName string = 'vm-prod-anlyt'
 param adminUsername string
 param adminPassword string
 
@@ -10,9 +10,9 @@ param osDiskType string = 'Premium_LRS'
 param osDiskSizeGB int = 128
 
 param vnetName string = 'vnet-anly-app-use'
-param subnetName string = 'snet-analytics-app-use'
-param nicName string = 'nic-prod-analyt'
-param nsgName string = 'nsg-prod-analyt'
+param subnetName string = 'snet-anlytics-app-use'
+param nicName string = 'nic-prod-anlyt'
+param nsgName string = 'nsg-prod-anlyt'
 param osType string = 'Windows'
 param osVersion string = '2022-Datacenter'
 
@@ -82,7 +82,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-07-01' = {
     storageProfile: {
       osDisk: {
         createOption: 'FromImage'
-        name: 'Disk-prod-analyt-OS1'
+        name: 'Disk-prod-anlyt-OS1'
         diskSizeGB: osDiskSizeGB
         managedDisk: {
           storageAccountType: osDiskType
