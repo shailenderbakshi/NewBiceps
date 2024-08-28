@@ -12,6 +12,8 @@ variables:
   functionAppName: 'craymyfunctionapp'
   appServicePlanName: 'my-app-service-plan'
   dotnetVersion: 'v6.0'  # Update according to your specific .NET version
+  vnetName: 'my-vnet'
+  subnetName: 'my-subnet'
 
 stages:
 - stage: DeployInfrastructure
@@ -37,3 +39,5 @@ stages:
                          functionAppName=$(functionAppName) \
                          appServicePlanName=$(appServicePlanName) \
                          dotnetVersion=$(dotnetVersion)
+                         vnetName=$(vnetName) \
+                         subnetName=$(subnetName)
