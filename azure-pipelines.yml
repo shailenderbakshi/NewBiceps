@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'Your Azure Subscription Name'  # Replace with your Azure subscription name
+  azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
   resourceGroupName: 'my-rg-functionapp'
   location: 'East US'
   storageAccountName: 'mystorageaccount'
