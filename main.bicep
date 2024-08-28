@@ -24,4 +24,21 @@ module storageAccountModule './modules/storage-account.bicep' = {
 
 // Deploy App Service Plan
 module appServicePlanModule './modules/app-service-plan.bicep' = {
-  name: 'appSer
+  name: 'appServicePlanDeployment'
+  params: {
+    name: appServicePlanName
+    location: location
+  }
+}
+
+// Deploy Function App
+module functionAppModule './modules/function-app.bicep' = {
+  name: 'functionAppDeployment'
+  params: {
+    name: functionAppName
+    location: location
+    appServicePlanId: appServicePlanModule.outputs.appServicePlanId
+    storageAccountName: storageAccountModule.outputs.name
+    dotnetVersion: dotnetVersion
+  }
+}
