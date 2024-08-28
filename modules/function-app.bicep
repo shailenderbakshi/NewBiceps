@@ -13,6 +13,9 @@ param storageAccountName string
 @description('The .NET version for the function app')
 param dotnetVersion string
 
+@description('The subnet ID for VNet integration')
+param subnetId string
+
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: name
   location: location
@@ -29,7 +32,8 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           value: 'dotnet'
         }
       ]
-      netFrameworkVersion: dotnetVersion  // Correctly specifies the .NET version for Windows-based apps
+      netFrameworkVersion: dotnetVersion
+      virtualNetworkSubnetId: subnetId  // VNet Integration
     }
   }
   kind: 'functionapp'
