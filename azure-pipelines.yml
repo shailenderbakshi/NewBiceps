@@ -8,7 +8,7 @@ variables:
   azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
   resourceGroupName: 'my-rg-functionapp'
   location: 'East US'  # This should be quoted if it contains spaces
-  storageAccountName: 'mystorageaccount'
+  storageAccountName: 'nottmystorageaccount01'
   functionAppName: 'myfunctionapp'
   appServicePlanName: 'my-app-service-plan'
   dotnetVersion: 'v6.0'  # Update according to your specific .NET version
