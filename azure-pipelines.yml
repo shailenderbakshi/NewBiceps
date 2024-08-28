@@ -1,4 +1,3 @@
-# azure-pipelines.yml
 trigger:
 - main
 
@@ -6,13 +5,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
+  azureSubscription: 'Your Azure Subscription Name'  # Replace with your Azure subscription name
   resourceGroupName: 'my-rg-functionapp'
   location: 'East US'
   storageAccountName: 'mystorageaccount'
   functionAppName: 'myfunctionapp'
   appServicePlanName: 'my-app-service-plan'
-  dotnetVersion: 'v6.0'
+  dotnetVersion: 'v6.0'  # Update according to your specific .NET version
 
 stages:
 - stage: DeployInfrastructure
@@ -26,15 +25,14 @@ stages:
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
-          # Create Resource Group (if not exists)
+          # Create Resource Group
           az group create --name $(resourceGroupName) --location $(location)
 
-          # Deploy Bicep Template with variables
+          # Deploy Bicep Template
           az deployment group create \
             --resource-group $(resourceGroupName) \
             --template-file $(System.DefaultWorkingDirectory)/main.bicep \
-            --parameters resourceGroupName=$(resourceGroupName) \
-                         location=$(location) \
+            --parameters location=$(location) \
                          storageAccountName=$(storageAccountName) \
                          functionAppName=$(functionAppName) \
                          appServicePlanName=$(appServicePlanName) \
