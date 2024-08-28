@@ -1,46 +1,21 @@
-param firewallName string
-param location string = resourceGroup().location
-param vnetId string
-param firewallSubnetId string
+@description('The name of the app service plan')
+param name string
 
-resource publicIP 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: 'afwpip-tpranly-hub-use-001'
+@description('The location where the app service plan will be created')
+param location string
+
+@description('The name of the resource group where the app service plan will be deployed')
+param resourceGroupName string
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: name
   location: location
+  resourceGroupName: resourceGroupName
   sku: {
-    name: 'Standard'
+    name: 'Y1'
+    tier: 'Dynamic'
   }
-  properties: {
-    publicIPAllocationMethod: 'Static'
-    idleTimeoutInMinutes: 4
-  }
+  kind: 'functionapp'
 }
 
-resource azureFirewall 'Microsoft.Network/azureFirewalls@2021-02-01' = {
-  name: firewallName
-  location: location
-  properties: {
-    sku: {
-      name: 'AZFW_VNet'
-      tier: 'Standard'
-    }
-    networkRuleCollections: []
-    applicationRuleCollections: []
-    natRuleCollections: []
-    ipConfigurations: [
-      {
-        name: 'azureFirewallIpConfig'
-        properties: {
-          subnet: {
-            id: firewallSubnetId
-          }
-          publicIPAddress: {
-            id: publicIP.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-output firewallId string = azureFirewall.id
-output publicIPId string = publicIP.id
+output appServicePlanId string = appServicePlan.id
