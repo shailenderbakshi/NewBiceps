@@ -1,9 +1,17 @@
+@description('The location where resources will be created')
 param location string = 'West Europe'
+
+@description('The name of the storage account')
 param storageAccountName string
+
+@description('The name of the Function App')
 param functionAppName string
+
+@description('The name of the App Service Plan')
 param appServicePlanName string = 'function-app-service-plan'
+
+@description('The .NET version for the Function App')
 param dotnetVersion string = 'v4.0'  // For .NET Framework, use "v6.0" for .NET 6
-param resourceGroupName string
 
 // Deploy Storage Account
 module storageAccountModule './modules/storage-account.bicep' = {
@@ -11,7 +19,6 @@ module storageAccountModule './modules/storage-account.bicep' = {
   params: {
     name: storageAccountName
     location: location
-    resourceGroupName: resourceGroupName
   }
 }
 
@@ -21,7 +28,6 @@ module appServicePlanModule './modules/app-service-plan.bicep' = {
   params: {
     name: appServicePlanName
     location: location
-    resourceGroupName: resourceGroupName
   }
 }
 
@@ -31,7 +37,6 @@ module functionAppModule './modules/function-app.bicep' = {
   params: {
     name: functionAppName
     location: location
-    resourceGroupName: resourceGroupName
     appServicePlanId: appServicePlanModule.outputs.appServicePlanId
     storageAccountName: storageAccountModule.outputs.name
     dotnetVersion: dotnetVersion
