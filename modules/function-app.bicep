@@ -29,7 +29,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           value: 'dotnet'
         }
       ]
-      linuxFxVersion: 'DOTNET|6.0'  // Correctly specifies the .NET 6 runtime
+      netFrameworkVersion: dotnetVersion  // Correctly specifies the .NET version for Windows-based apps
     }
   }
   kind: 'functionapp'
