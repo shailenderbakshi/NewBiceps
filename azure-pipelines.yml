@@ -9,7 +9,7 @@ variables:
   resourceGroupName: 'my-rg-functionapp'
   location: 'East US'  # This should be quoted if it contains spaces
   storageAccountName: 'nottmystorageaccount01'
-  functionAppName: 'myfunctionapp'
+  functionAppName: 'craymyfunctionapp'
   appServicePlanName: 'my-app-service-plan'
   dotnetVersion: 'v6.0'  # Update according to your specific .NET version
 
