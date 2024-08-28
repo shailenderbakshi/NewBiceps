@@ -8,10 +8,11 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: name
   location: location
   sku: {
-    name: 'Y1'
-    tier: 'Dynamic'
+    name: 'P1V2'
+    tier: 'PremiumV2'
+    capacity: 1
   }
-  kind: 'windows'  // Ensure this is set to 'windows' for a Windows-based App Service Plan
+  kind: 'windows'
 }
 
 output appServicePlanId string = appServicePlan.id
