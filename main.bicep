@@ -11,7 +11,7 @@ param functionAppName string
 param appServicePlanName string = 'function-app-service-plan'
 
 @description('The .NET version for the Function App')
-param dotnetVersion string = 'v4.0'  // For .NET Framework, use "v6.0" for .NET 6
+param dotnetVersion string = 'v6.0'  // Use "v6.0" for .NET 6
 
 // Deploy Storage Account
 module storageAccountModule './modules/storage-account.bicep' = {
