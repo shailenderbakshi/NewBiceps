@@ -23,7 +23,7 @@ param subnetName string
 param vnetAddressPrefix string = '10.0.0.0/16'
 
 @description('The address prefix for the subnet')
-param subnetAddressPrefix string = '10.0.0.0/24'
+param subnetAddressPrefix string = '10.0.1.0/24'
 
 // Deploy Storage Account
 module storageAccountModule './modules/storage-account.bicep' = {
