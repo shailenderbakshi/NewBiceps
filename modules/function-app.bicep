@@ -4,9 +4,6 @@ param name string
 @description('The location where the function app will be created')
 param location string
 
-@description('The name of the resource group where the function app will be deployed')
-param resourceGroupName string
-
 @description('The ID of the app service plan')
 param appServicePlanId string
 
@@ -19,7 +16,6 @@ param dotnetVersion string
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: name
   location: location
-  resourceGroupName: resourceGroupName
   properties: {
     serverFarmId: appServicePlanId
     siteConfig: {
