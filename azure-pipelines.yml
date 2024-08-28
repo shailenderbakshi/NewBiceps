@@ -7,7 +7,7 @@ pool:
 variables:
   azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
   resourceGroupName: 'my-rg-functionapp'
-  location: 'East US'
+  location: 'East US'  # This should be quoted if it contains spaces
   storageAccountName: 'mystorageaccount'
   functionAppName: 'myfunctionapp'
   appServicePlanName: 'my-app-service-plan'
@@ -26,13 +26,13 @@ stages:
         scriptLocation: inlineScript
         inlineScript: |
           # Create Resource Group
-          az group create --name $(resourceGroupName) --location $(location)
+          az group create --name $(resourceGroupName) --location "$(location)"
 
           # Deploy Bicep Template
           az deployment group create \
             --resource-group $(resourceGroupName) \
             --template-file $(System.DefaultWorkingDirectory)/main.bicep \
-            --parameters location=$(location) \
+            --parameters location="$(location)" \
                          storageAccountName=$(storageAccountName) \
                          functionAppName=$(functionAppName) \
                          appServicePlanName=$(appServicePlanName) \
