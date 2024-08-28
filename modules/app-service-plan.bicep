@@ -11,7 +11,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
     name: 'Y1'
     tier: 'Dynamic'
   }
-  kind: 'functionapp'
+  kind: 'windows'  // Ensure this is set to 'windows' for a Windows-based App Service Plan
 }
 
 output appServicePlanId string = appServicePlan.id
