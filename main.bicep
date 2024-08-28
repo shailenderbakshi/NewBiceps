@@ -13,6 +13,18 @@ param appServicePlanName string = 'function-app-service-plan'
 @description('The .NET version for the Function App')
 param dotnetVersion string = 'v6.0'  // Use "v6.0" for .NET 6 on Windows
 
+@description('The name of the VNet')
+param vnetName string
+
+@description('The name of the subnet within the VNet')
+param subnetName string
+
+@description('The address prefix for the VNet')
+param vnetAddressPrefix string = '10.0.0.0/16'
+
+@description('The address prefix for the subnet')
+param subnetAddressPrefix string = '10.0.0.0/24'
+
 // Deploy Storage Account
 module storageAccountModule './modules/storage-account.bicep' = {
   name: 'storageAccountDeployment'
@@ -31,7 +43,19 @@ module appServicePlanModule './modules/app-service-plan.bicep' = {
   }
 }
 
-// Deploy Function App
+// Deploy Virtual Network and Subnet
+module vnetModule './modules/vnet.bicep' = {
+  name: 'vnetDeployment'
+  params: {
+    vnetName: vnetName
+    subnetName: subnetName
+    vnetAddressPrefix: vnetAddressPrefix
+    subnetAddressPrefix: subnetAddressPrefix
+    location: location
+  }
+}
+
+// Deploy Function App with VNet Integration
 module functionAppModule './modules/function-app.bicep' = {
   name: 'functionAppDeployment'
   params: {
@@ -40,5 +64,6 @@ module functionAppModule './modules/function-app.bicep' = {
     appServicePlanId: appServicePlanModule.outputs.appServicePlanId
     storageAccountName: storageAccountModule.outputs.name
     dotnetVersion: dotnetVersion
+    subnetId: vnetModule.outputs.subnetId
   }
 }
