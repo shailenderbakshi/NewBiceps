@@ -14,6 +14,8 @@ variables:
   dotnetVersion: 'v6.0'  # Update according to your specific .NET version
   vnetName: 'my-vnet'
   subnetName: 'my-subnet'
+  vnetAddressPrefix: '10.0.0.0/16'
+  subnetAddressPrefix: '10.0.1.0/24'
 
 stages:
 - stage: DeployInfrastructure
@@ -40,4 +42,6 @@ stages:
                          appServicePlanName=$(appServicePlanName) \
                          dotnetVersion=$(dotnetVersion)
                          vnetName=$(vnetName) \
-                         subnetName=$(subnetName)
+                         subnetName=$(subnetName) \
+                         vnetAddressPrefix=$(vnetAddressPrefix) \
+                         subnetAddressPrefix=$(subnetAddressPrefix)
