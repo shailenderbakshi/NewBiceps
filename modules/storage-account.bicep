@@ -1,105 +1,21 @@
-param appGatewayName string
+@description('The name of the storage account')
+param name string
+
+@description('The location where the storage account will be created')
 param location string
-param appGatewaySubnetId string
 
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
-  name: 'agwpip-tpranly-hub-use-001'
+@description('The name of the resource group where the storage account will be deployed')
+param resourceGroupName string
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+  name: name
   location: location
+  resourceGroupName: resourceGroupName
   sku: {
-    name: 'Standard'
+    name: 'Standard_LRS'
   }
-  properties: {
-    publicIPAllocationMethod: 'Static'
-  }
+  kind: 'StorageV2'
 }
 
-resource applicationGateway 'Microsoft.Network/applicationGateways@2021-02-01' = {
-  name: appGatewayName
-  location: location
-  properties: {
-    sku: {
-      name: 'Standard_v2'
-      tier: 'Standard_v2'
-      capacity: 2
-    }
-    gatewayIPConfigurations: [
-      {
-        name: 'appGatewayIpConfig'
-        properties: {
-          subnet: {
-            id: appGatewaySubnetId
-          }
-        }
-      }
-    ]
-    frontendIPConfigurations: [
-      {
-        name: 'appGatewayFrontendIp'
-        properties: {
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
-        }
-      }
-    ]
-    frontendPorts: [
-      {
-        name: 'appGatewayFrontendPort'
-        properties: {
-          port: 80
-        }
-      }
-    ]
-    backendAddressPools: [
-      {
-        name: 'appGatewayBackendPool'
-      }
-    ]
-    backendHttpSettingsCollection: [
-      {
-        name: 'appGatewayBackendHttpSettings'
-        properties: {
-          port: 80
-          protocol: 'Http'
-          cookieBasedAffinity: 'Disabled'
-          requestTimeout: 20
-        }
-      }
-    ]
-    httpListeners: [
-      {
-        name: 'appGatewayHttpListener'
-        properties: {
-          frontendIPConfiguration: {
-            id: resourceId('Microsoft.Network/applicationGateways/frontendIPConfigurations', appGatewayName, 'appGatewayFrontendIp')
-          }
-          frontendPort: {
-            id: resourceId('Microsoft.Network/applicationGateways/frontendPorts', appGatewayName, 'appGatewayFrontendPort')
-          }
-          protocol: 'Http'
-          sslCertificate: null
-        }
-      }
-    ]
-    requestRoutingRules: [
-      {
-        name: 'rule1'
-        properties: {
-          ruleType: 'Basic'
-          httpListener: {
-            id: resourceId('Microsoft.Network/applicationGateways/httpListeners', appGatewayName, 'appGatewayHttpListener')
-          }
-          backendAddressPool: {
-            id: resourceId('Microsoft.Network/applicationGateways/backendAddressPools', appGatewayName, 'appGatewayBackendPool')
-          }
-          backendHttpSettings: {
-            id: resourceId('Microsoft.Network/applicationGateways/backendHttpSettingsCollection', appGatewayName, 'appGatewayBackendHttpSettings')
-          }
-        }
-      }
-    ]
-  }
-}
-
-output appGatewayId string = applicationGateway.id
-output publicIPId string = publicIPAddress.id
+output name string = storageAccount.name
+output primaryEndpoints object = storageAccount.properties.primaryEndpoints
