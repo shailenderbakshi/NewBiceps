@@ -6,14 +6,14 @@ pool:
 
 variables:
   azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
-  resourceGroupName: 'functionapp-conn-rg'
+  resourceGroupName: 'functionapp-conn2-rg'
   location: 'East US'
-  storageAccountName: 'nottsmystorageaccount01'
-  functionAppName: 'FunctionAppCaller'
+  storageAccountName: 'nottsmystorageaccount02'
+  functionAppName: 'FunctionAppResponder'
   appServicePlanName: 'my-app-service-plan'
   dotnetVersion: 'v6.0'  # Ensure this matches the runtime you want to deploy
-  vnetName: 'my-vnet01'
-  subnetName: 'my-subnet01'
+  vnetName: 'my-vnet02'
+  subnetName: 'my-subnet02'
   vnetAddressPrefix: '10.0.0.0/16'
   subnetAddressPrefix: '10.0.1.0/24'
 
