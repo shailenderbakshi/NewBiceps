@@ -7,11 +7,11 @@ pool:
 variables:
   azureSubscription: 'Shail-Subs'  # Replace with your Azure subscription name
   resourceGroupName: 'my-rg-functionapp'
-  location: 'East US'  # This should be quoted if it contains spaces
-  storageAccountName: 'nottmystorageaccount01'
-  functionAppName: 'craymyfunctionapp'
+  location: 'East US'
+  storageAccountName: 'nottsmystorageaccount'
+  functionAppName: 'nottsmyfunctionapp'
   appServicePlanName: 'my-app-service-plan'
-  dotnetVersion: 'v6.0'  # Update according to your specific .NET version
+  dotnetVersion: 'v6.0'  # Ensure this matches the runtime you want to deploy
   vnetName: 'my-vnet'
   subnetName: 'my-subnet'
   vnetAddressPrefix: '10.0.0.0/16'
@@ -21,7 +21,7 @@ stages:
 - stage: DeployInfrastructure
   jobs:
   - job: Deploy
-    displayName: 'Deploy Azure Function App with Bicep'
+    displayName: 'Deploy Azure Function App with VNet Integration'
     steps:
     - task: AzureCLI@2
       inputs:
@@ -40,7 +40,7 @@ stages:
                          storageAccountName=$(storageAccountName) \
                          functionAppName=$(functionAppName) \
                          appServicePlanName=$(appServicePlanName) \
-                         dotnetVersion=$(dotnetVersion)
+                         dotnetVersion=$(dotnetVersion) \
                          vnetName=$(vnetName) \
                          subnetName=$(subnetName) \
                          vnetAddressPrefix=$(vnetAddressPrefix) \
