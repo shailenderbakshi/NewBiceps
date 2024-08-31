@@ -15,11 +15,11 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   location: location
   sku: {
     name: appServicePlanSku
-    tier: 'WorkflowStandard'  // Correct tier for Logic Apps
-    capacity: 1  // Adjust the instance count as needed
+    tier: 'WorkflowStandard'
+    capacity: 1
   }
   properties: {
-    reserved: true  // Required for WorkflowStandard
+    reserved: true
   }
 }
 
