@@ -5,6 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  resourceGroupName: 'notts-rg'        # Replace with your resource group name
   logicAppName: 'notts-logic-app'               # Replace with your Logic App name
   location: 'East US'                        # Replace with your desired location
   appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
@@ -13,12 +14,12 @@ variables:
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Shail-Subs'
+    azureSubscription: '<Your Azure Subscription Name>'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az deployment group create \
-        --resource-group <Resource Group Name> \
+        --resource-group $(resourceGroupName) \
         --template-file ./infrastructure/logic-app.bicep \
         --parameters logicAppName=$(logicAppName) \
                       location=$(location) \
