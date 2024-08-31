@@ -35,7 +35,7 @@ resource logicApp 'Microsoft.Web/sites@2020-12-01' = {
         {
           name: 'WEBSITE_NODE_DEFAULT_VERSION'
           value: '~14'
-        },
+        }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'node'
