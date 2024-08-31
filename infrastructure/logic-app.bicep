@@ -8,16 +8,15 @@ param location string = resourceGroup().location
 param appServicePlanName string
 
 @description('The pricing tier for the App Service Plan')
-param appServicePlanSku string = 'P1v2'  // Example: P1v2 (PremiumV2)
+param appServicePlanSku string = 'WS1'  // WorkflowStandard SKU
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: appServicePlanName
   location: location
   sku: {
     name: appServicePlanSku
-    tier: 'PremiumV2'  // Adjust according to your needs
+    tier: 'WorkflowStandard'  // Must be WorkflowStandard for Logic Apps (Standard)
   }
-  kind: 'elastic'
 }
 
 resource logicApp 'Microsoft.Web/sites@2020-12-01' = {
