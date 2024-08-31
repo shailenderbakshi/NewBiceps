@@ -36,7 +36,7 @@ resource logicApp 'Microsoft.Logic/workflows@2019-05-01' = {
     name: logicAppSku
   }
   tags: {
-    'hidden-link:/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.Insights/components/${appInsights.name}': 'Resource'
+    ('hidden-link:/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.Insights/components/${appInsights.name}'): 'Resource'
   }
 }
 
