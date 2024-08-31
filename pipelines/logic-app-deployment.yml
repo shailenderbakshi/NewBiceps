@@ -14,7 +14,7 @@ variables:
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: '<Your Azure Subscription Name>'
+    azureSubscription: 'Shail-Subs'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
