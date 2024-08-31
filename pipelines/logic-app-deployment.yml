@@ -1,0 +1,27 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  logicAppName: 'notts-logic-app'               # Replace with your Logic App name
+  location: 'East US'                        # Replace with your desired location
+  appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
+  logicAppSku: 'Standard'                    # Replace with the SKU (Standard, Consumption, etc.)
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Shail-Subs'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az deployment group create \
+        --resource-group <Resource Group Name> \
+        --template-file ./infrastructure/logic-app.bicep \
+        --parameters logicAppName=$(logicAppName) \
+                      location=$(location) \
+                      appInsightsName=$(appInsightsName) \
+                      logicAppSku=$(logicAppSku)
+    addSpnToEnvironment: true
