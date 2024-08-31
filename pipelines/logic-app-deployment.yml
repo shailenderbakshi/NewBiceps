@@ -5,11 +5,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  resourceGroupName: 'notts-rg'               # Make sure this resource group exists
+  resourceGroupName: 'notts-rg'               # Ensure this resource group exists
   logicAppName: 'notts-logic-app'                # Replace with your Logic App name
-  location: 'eastus'                         # Replace with your desired location
+  location: 'East US'                         # Replace with your desired location
   appServicePlanName: 'notts-app-service-plan'   # Name of the App Service Plan
-  appServicePlanSku: 'P1v2'                   # Adjust according to your requirements
+  appServicePlanSku: 'P1v2'                   # Adjust according to your needs
 
 steps:
 - task: AzureCLI@2
@@ -18,6 +18,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
+      az group create --name "$(resourceGroupName)" --location "$(location)"
       az deployment group create \
         --resource-group "$(resourceGroupName)" \
         --template-file ./infrastructure/logic-app.bicep \
