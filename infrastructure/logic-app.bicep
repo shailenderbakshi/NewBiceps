@@ -8,15 +8,18 @@ param location string = resourceGroup().location
 param appServicePlanName string
 
 @description('The pricing tier for the App Service Plan')
-param appServicePlanSku string = 'WS1'  // Workflow Standard Tier 1
+param appServicePlanSku string = 'WS1'  // WorkflowStandard Tier 1
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: appServicePlanName
   location: location
   sku: {
     name: appServicePlanSku
-    tier: 'WorkflowStandard'
-    capacity: 1  // Number of workers (adjust as needed)
+    tier: 'WorkflowStandard'  // Correct tier for Logic Apps
+    capacity: 1  // Adjust the instance count as needed
+  }
+  properties: {
+    reserved: true  // Required for WorkflowStandard
   }
 }
 
@@ -32,7 +35,7 @@ resource logicApp 'Microsoft.Web/sites@2020-12-01' = {
         {
           name: 'WEBSITE_NODE_DEFAULT_VERSION'
           value: '~14'
-        }
+        },
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'node'
