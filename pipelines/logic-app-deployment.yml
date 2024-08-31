@@ -8,7 +8,7 @@ variables:
   resourceGroupName: 'notts-rg'        # Replace with your resource group name
   logicAppName: 'notts-logic-app'               # Replace with your Logic App name
   location: 'eastus'                        # Replace with your desired location
-  appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
+  # appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
   logicAppSku: 'Standard'                    # Replace with the SKU (Standard, Consumption, etc.)
 
 steps:
@@ -23,6 +23,6 @@ steps:
         --template-file ./infrastructure/logic-app.bicep \
         --parameters logicAppName=$(logicAppName) \
                       location=$(location) \
-                      appInsightsName=$(appInsightsName) \
+                      # appInsightsName=$(appInsightsName) \
                       logicAppSku=$(logicAppSku)
     addSpnToEnvironment: true
