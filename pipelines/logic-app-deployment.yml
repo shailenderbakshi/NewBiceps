@@ -7,7 +7,7 @@ pool:
 variables:
   resourceGroupName: 'notts-rg'        # Replace with your resource group name
   logicAppName: 'notts-logic-app'               # Replace with your Logic App name
-  location: 'East US'                        # Replace with your desired location
+  location: 'eastus'                        # Replace with your desired location
   appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
   logicAppSku: 'Standard'                    # Replace with the SKU (Standard, Consumption, etc.)
 
