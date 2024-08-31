@@ -5,24 +5,24 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  resourceGroupName: 'notts-rg'        # Replace with your resource group name
-  logicAppName: 'notts-logic-app'               # Replace with your Logic App name
-  location: 'eastus'                        # Replace with your desired location
-  # appInsightsName: 'notts-app-insights'         # Replace with your Application Insights name
-  logicAppSku: 'Standard'                    # Replace with the SKU (Standard, Consumption, etc.)
+  resourceGroupName: 'notts-rg'               # Make sure this resource group exists
+  logicAppName: 'notts-logic-app'                # Replace with your Logic App name
+  location: 'eastus'                         # Replace with your desired location
+  appServicePlanName: 'notts-app-service-plan'   # Name of the App Service Plan
+  appServicePlanSku: 'P1v2'                   # Adjust according to your requirements
 
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: 'Shail-Subs'
+    azureSubscription: '<Your Azure Subscription Name>'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az deployment group create \
-        --resource-group $(resourceGroupName) \
+        --resource-group "$(resourceGroupName)" \
         --template-file ./infrastructure/logic-app.bicep \
-        --parameters logicAppName=$(logicAppName) \
-                      location=$(location) \
-                      # appInsightsName=$(appInsightsName) \
-                      logicAppSku=$(logicAppSku)
+        --parameters logicAppName="$(logicAppName)" \
+                      location="$(location)" \
+                      appServicePlanName="$(appServicePlanName)" \
+                      appServicePlanSku="$(appServicePlanSku)"
     addSpnToEnvironment: true
