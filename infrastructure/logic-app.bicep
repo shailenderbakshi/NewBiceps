@@ -10,17 +10,17 @@ param logicAppSku string = 'Standard'
 resource logicApp 'Microsoft.Logic/workflows@2019-05-01' = {
   name: logicAppName
   location: location
+  sku: {
+    name: logicAppSku
+  }
   properties: {
     definition: {
-      contentVersion: '1.0.0.0',
-      actions: {},
+      contentVersion: '1.0.0.0'
+      actions: {}
       triggers: {}
     }
     integrationAccount: null
     state: 'Enabled'
-  }
-  sku: {
-    name: logicAppSku
   }
 }
 
