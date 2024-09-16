@@ -10,11 +10,12 @@ variables:
   location: 'eastus'
   storageAccountName: 'nottscounty01010202'
   vnetName: 'vnet-tpranly-hub-use'
-  firewallName: 'afw-tpranly-hub-use-001'
-  gatewayName: 'vgw-tpranly-hub-use-001'
-  bastionHostName: 'bas-tpranly-hub-use-001'
+  apimName: 'apim-prod-instance'
+  # firewallName: 'afw-tpranly-hub-use-001'
+  # gatewayName: 'vgw-tpranly-hub-use-001'
+  # bastionHostName: 'bas-tpranly-hub-use-001'
   logAnalyticsWorkspaceName: 'log-tpranly-hub-use-001'
-  appGatewayName: 'agw-tpranly-hub-use-001'
+  # appGatewayName: 'agw-tpranly-hub-use-001'
   # policyAssignmentName: 'nottsPolicyAssignment'
   
 steps:
@@ -34,6 +35,7 @@ steps:
       az deployment group create \
         --resource-group $(resourceGroupName) \
         --template-file main.bicep \
+        --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) apimName=$(apimName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) location=$(location)
         --parameters storageAccountName=$(storageAccountName) vnetName=$(vnetName) firewallName=$(firewallName) gatewayName=$(gatewayName) bastionHostName=$(bastionHostName) logAnalyticsWorkspaceName=$(logAnalyticsWorkspaceName) appGatewayName=$(appGatewayName) location=$(location)
         # --parameters vnetName=$(vnetName) appGatewayName=$(appGatewayName) location=$(location)
   displayName: 'Deploy Bicep Template'
