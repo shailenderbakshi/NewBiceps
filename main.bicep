@@ -4,6 +4,9 @@ param vnetName string
 // param gatewayName string
 // param bastionHostName string
 param apimName string
+param publisherEmail string = 'shailender_bakshi@yahoo.com'  // You can change this as per your requirement
+param publisherName string = 'NottsOrg'  // You can change this as per your requirement
+param skuName string = 'Developer'  // Default SKU, but you can change it as needed
 param logAnalyticsWorkspaceName string
 // param appGatewayName string
 // param policyAssignmentName string
