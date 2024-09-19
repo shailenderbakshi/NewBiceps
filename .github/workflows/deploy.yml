@@ -14,9 +14,9 @@ jobs:
       LOCATION: 'eastus'
       STORAGE_ACCOUNT_NAME: 'nottscounty01010202'
       VNET_NAME: 'notts-vnet'
-      FIREWALL_NAME: 'fwnotts'
-      GATEWAY_NAME: 'vpnGWnotts'
-      BASTION_HOST_NAME: 'bastionnotts'
+      #FIREWALL_NAME: 'fwnotts'
+      #GATEWAY_NAME: 'vpnGWnotts'
+      #BASTION_HOST_NAME: 'bastionnotts'
       LOG_ANALYTICS_WORKSPACE_NAME: 'nottsLogAnalytics'
 
     steps:
@@ -45,8 +45,8 @@ jobs:
           --template-file main.bicep \
           --parameters storageAccountName=$STORAGE_ACCOUNT_NAME \
                        vnetName=$VNET_NAME \
-                       firewallName=$FIREWALL_NAME \
-                       gatewayName=$GATEWAY_NAME \
-                       bastionHostName=$BASTION_HOST_NAME \
+                       #firewallName=$FIREWALL_NAME \
+                       #gatewayName=$GATEWAY_NAME \
+                       #bastionHostName=$BASTION_HOST_NAME \
                        logAnalyticsWorkspaceName=$LOG_ANALYTICS_WORKSPACE_NAME \
                        location=$LOCATION
