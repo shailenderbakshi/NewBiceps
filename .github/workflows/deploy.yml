@@ -1,0 +1,52 @@
+name: Deploy Bicep Template
+
+# Only run manually (no automatic triggers)
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
+      RESOURCE_GROUP_NAME: 'New-Notts-rg'
+      LOCATION: 'eastus'
+      STORAGE_ACCOUNT_NAME: 'nottscounty01010202'
+      VNET_NAME: 'notts-vnet'
+      FIREWALL_NAME: 'fwnotts'
+      GATEWAY_NAME: 'vpnGWnotts'
+      BASTION_HOST_NAME: 'bastionnotts'
+      LOG_ANALYTICS_WORKSPACE_NAME: 'nottsLogAnalytics'
+
+    steps:
+    # Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # Azure CLI login action using secrets for security
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Run the Azure CLI commands
+    - name: Deploy Bicep Template
+      run: |
+        # Login to the correct subscription
+        az account set --subscription $AZURE_SUBSCRIPTION
+
+        # Create the Resource Group if it doesn't exist
+        az group create --name $RESOURCE_GROUP_NAME --location $LOCATION
+
+        # Deploy the Bicep template
+        az deployment group create \
+          --resource-group $RESOURCE_GROUP_NAME \
+          --template-file main.bicep \
+          --parameters storageAccountName=$STORAGE_ACCOUNT_NAME \
+                       vnetName=$VNET_NAME \
+                       firewallName=$FIREWALL_NAME \
+                       gatewayName=$GATEWAY_NAME \
+                       bastionHostName=$BASTION_HOST_NAME \
+                       logAnalyticsWorkspaceName=$LOG_ANALYTICS_WORKSPACE_NAME \
+                       location=$LOCATION
